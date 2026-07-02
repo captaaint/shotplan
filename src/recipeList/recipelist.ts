@@ -15,16 +15,7 @@ export class RecipeList {
     console.log('RecipeList component initialized.');
   }
   protected readonly recipeService = inject(RecipeService);
-  protected readonly selectedRecipe = signal<RecipeModel>(this.recipeService.getRecipes()[0]);
   protected readonly query = signal('');
-
-  protected choose(recipeId: string): void {
-    this.selectedRecipe.set(
-      this.recipeService.getRecipeById(recipeId) || this.recipeService.getRecipes()[0],
-    );
-
-    console.log(`You chose: ${this.selectedRecipe()?.name}`);
-  }
 
   protected filteredRecipes = computed(() => {
     const q = this.query().toLowerCase();
