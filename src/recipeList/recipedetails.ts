@@ -5,10 +5,11 @@ import { IngredientModel } from '../app/models';
 @Component({
   selector: 'recipe-details',
   templateUrl: './recipedetails.html',
+  styleUrl: './recipedetails.css',
   standalone: true,
 })
 export class RecipeDetails {
-  protected readonly recipe = input.required<RecipeModel>();
+recipe = input.required<RecipeModel>();
   protected readonly servings = signal(1);
 
   protected readonly ingredients = computed(() => {
