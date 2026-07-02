@@ -1,4 +1,4 @@
-import { Component, Input, signal, computed } from '@angular/core';
+import { Component, input, signal, computed } from '@angular/core';
 import { RecipeModel } from '../app/models';
 import { IngredientModel } from '../app/models';
 
@@ -9,11 +9,11 @@ import { IngredientModel } from '../app/models';
 })
 export class RecipeDetails {
 
-    @Input() recipe!: RecipeModel;
-      protected readonly servings = signal(1);
+    protected readonly recipe = input.required<RecipeModel>();
+    protected readonly servings = signal(1);
 
   protected readonly ingredients = computed(() => {
-    return this.recipe.ingredients.map(ingredient => ({
+    return this.recipe().ingredients.map(ingredient => ({
       ...ingredient,
       quantity: ingredient.quantity * this.servings(),
     }));
