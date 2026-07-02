@@ -1,11 +1,11 @@
-import { Component, computed, signal } from '@angular/core';
-import { RecipeList } from '../recipeList/recipelist';
+import { Component, signal } from '@angular/core';
+import { RouterOutlet } from '@angular/router';
 
 @Component({
   selector: 'app-root',
   templateUrl: './app.html',
   styleUrl: './app.scss',
-  imports: [RecipeList],
+  imports: [RouterOutlet],
 })
 export class App {
   protected readonly appTitle = signal('Smart Recipe Box');

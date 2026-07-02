@@ -15,17 +15,20 @@ export class RecipeList {
     console.log('RecipeList component initialized.');
   }
   protected readonly recipeService = inject(RecipeService);
-  protected readonly recipes = signal<RecipeModel[]>(this.recipeService.getRecipes());
-  protected readonly selectedRecipe = signal<RecipeModel>(this.recipes()[0]);
+  protected readonly selectedRecipe = signal<RecipeModel>(this.recipeService.getRecipes()[0]);
   protected readonly query = signal('');
 
   protected choose(recipeId: string): void {
-    this.selectedRecipe.set(this.recipeService.getRecipeById(recipeId) || this.recipes()[0]);
+    this.selectedRecipe.set(
+      this.recipeService.getRecipeById(recipeId) || this.recipeService.getRecipes()[0],
+    );
     console.log(`You chose: ${this.selectedRecipe()?.name}`);
   }
 
   protected filteredRecipes = computed(() => {
     const q = this.query().toLowerCase();
-    return this.recipes().filter((recipe) => recipe.name.toLowerCase().includes(q));
+    return this.recipeService
+      .getRecipes()
+      .filter((recipe) => recipe.name.toLowerCase().includes(q));
   });
 }
