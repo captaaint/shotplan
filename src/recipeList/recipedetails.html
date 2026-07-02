@@ -1,18 +1,15 @@
 <div>
-<h2>{{(recipe).name}}</h2>
-<img [src]="(recipe).imageUrl" [alt]="(recipe).name" width="200px" height="auto"/>
-<p>{{(recipe).description}}</p>
-<p>Servings: {{servings()}}</p>
-<ul>
-    @for(ingredient of ingredients(); track ingredient.name;) {
-<li>{{ingredient.name}} - {{ingredient.quantity}} {{ingredient.unit}}</li>
-
+  <h2>{{ recipe().name }}</h2>
+  <img [src]="recipe().imageUrl" [alt]="recipe().name" width="200px" height="auto" />
+  <p>{{ recipe().description }}</p>
+  <p>Servings: {{ servings() }}</p>
+  <ul>
+    @for (ingredient of ingredients(); track ingredient.name) {
+      <li>{{ ingredient.name }} - {{ ingredient.quantity }} {{ ingredient.unit }}</li>
     }
-</ul>
-        <div>
+  </ul>
+  <div>
     <button (click)="increase()">Increase</button>
     <button (click)="decrease()">Decrease</button>
+  </div>
 </div>
-</div>
-
-

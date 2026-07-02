@@ -1,6 +1,5 @@
 import { Component, computed, signal } from '@angular/core';
-import { RecipeList } from "../recipeList/recipelist";
-
+import { RecipeList } from '../recipeList/recipelist';
 
 @Component({
   selector: 'app-root',

@@ -8,25 +8,23 @@ import { IngredientModel } from '../app/models';
   standalone: true,
 })
 export class RecipeDetails {
-
-    protected readonly recipe = input.required<RecipeModel>();
-    protected readonly servings = signal(1);
+  protected readonly recipe = input.required<RecipeModel>();
+  protected readonly servings = signal(1);
 
   protected readonly ingredients = computed(() => {
-    return this.recipe().ingredients.map(ingredient => ({
+    return this.recipe().ingredients.map((ingredient) => ({
       ...ingredient,
       quantity: ingredient.quantity * this.servings(),
     }));
   });
 
-    protected increase(): void {
-        this.servings.update(s => s + 1);
-        console.log(`Servings increased to: ${this.servings()}`);
-    }
+  protected increase(): void {
+    this.servings.update((s) => s + 1);
+    console.log(`Servings increased to: ${this.servings()}`);
+  }
 
-    protected decrease(): void {
-        this.servings.update(s => Math.max(1, s - 1));
-        console.log(`Servings decreased to: ${this.servings()}`);
-    }
+  protected decrease(): void {
+    this.servings.update((s) => Math.max(1, s - 1));
+    console.log(`Servings decreased to: ${this.servings()}`);
+  }
 }
-    
