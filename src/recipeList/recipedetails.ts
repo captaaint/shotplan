@@ -9,7 +9,7 @@ import { IngredientModel } from '../app/models';
   standalone: true,
 })
 export class RecipeDetails {
-recipe = input.required<RecipeModel>();
+  recipe = input.required<RecipeModel>();
   protected readonly servings = signal(1);
 
   protected readonly ingredients = computed(() => {

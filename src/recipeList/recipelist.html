@@ -1,12 +1,22 @@
-<recipe-details [recipe]="selectedRecipe()"></recipe-details>
-
-<div class="d-flex flex-wrap gap-2 mt-3">
-  @for (recipe of recipes(); track recipe.id) {
-    <button type="button" class="btn btn-outline-primary" (click)="choose(recipe.id)">
-      Choose {{ recipe.name }}
-      @if (recipe.favorite) {
-        <span class="ms-1">*</span>
+<div class="container py-4">
+  <div class="card shadow-sm mb-4 p-3">
+    <input
+      type="text"
+      class="form-control w-full"
+      [ngModel]="query()"
+      (ngModelChange)="query.set($event)"
+      min="1"
+    />
+    <div class="d-flex flex-wrap gap-2 mt-3">
+      @for (recipe of filteredRecipes(); track recipe.id) {
+        <button type="button" class="btn btn-outline-primary" (click)="choose(recipe.id)">
+          Choose {{ recipe.name }}
+          @if (recipe.favorite) {
+            <span class="ms-1">*</span>
+          }
+        </button>
       }
-    </button>
-  }
+    </div>
+  </div>
+  <recipe-details [recipe]="selectedRecipe()"></recipe-details>
 </div>
