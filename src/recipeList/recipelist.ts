@@ -13,7 +13,7 @@ export class RecipeList {
   constructor() {
     console.log('RecipeList component initialized.');
   }
-
+  protected readonly recipes = signal<RecipeModel[]>(recipes);
   protected readonly selectedRecipe = signal<RecipeModel>(recipes[0]);
 
   protected choose(recipeId: string): void {

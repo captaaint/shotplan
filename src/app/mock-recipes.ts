@@ -10,6 +10,7 @@ const recipes: RecipeModel[] = [
       { name: 'Pancetta', quantity: 100, unit: 'grams' },
     ],
     imageUrl: '/assets/spaghetti_carbonara.jpeg',
+    favorite: true,
   },
   {
     id: '2',

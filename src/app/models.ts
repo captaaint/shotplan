@@ -4,6 +4,7 @@ export interface RecipeModel {
   description: string;
   ingredients: IngredientModel[];
   imageUrl: string;
+  favorite?: boolean;
 }
 
 export interface IngredientModel {

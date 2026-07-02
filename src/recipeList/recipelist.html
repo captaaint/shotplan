@@ -1,3 +1,10 @@
 <recipe-details [recipe]="selectedRecipe()"></recipe-details>
-<button (click)="choose('1')">Choose Spaghetti Carbonara</button>
-<button (click)="choose('2')">Choose Caprese Salad</button>
+@for (recipe of recipes(); track recipe.id) {
+  <button (click)="choose(recipe.id)">
+    Choose {{ recipe.name }}
+    @if (recipe.favorite) {
+      <span>*</span>
+    }
+  </button>
+}
+    
