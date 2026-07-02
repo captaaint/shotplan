@@ -1,0 +1,15 @@
+<h2>{{(selectedRecipe())?.name}}</h2>
+<img [src]="(selectedRecipe())?.imageUrl" [alt]="(selectedRecipe())?.name" width="200px" height="auto"/>
+<p>{{(selectedRecipe())?.description}}</p>
+<p>Servings: {{servings()}}</p>
+<ul>
+    @for(ingredient of ingredients(); track ingredient.name;) {
+        <li>{{ingredient.name}} - {{ingredient.quantity}} {{ingredient.unit}}</li>
+    }
+</ul>
+<button (click)="choose('1')">Choose Spaghetti Carbonara</button>
+<button (click)="choose('2')">Choose Caprese Salad</button>
+<div>
+    <button (click)="increase()">Increase</button>
+    <button (click)="decrease()">Decrease</button>
+</div>
