@@ -2,11 +2,13 @@ import { Component, inject } from '@angular/core';
 import { RecipeService } from './recipeservice';
 import { FormBuilder, ReactiveFormsModule } from '@angular/forms';
 import { RouterLink } from '@angular/router';
+import { SubmitButton } from "./submitbtn";
 
 @Component({
   selector: 'create-recipe',
   templateUrl: './createrecipe.html',
-  imports: [ReactiveFormsModule, RouterLink],
+  imports: [ReactiveFormsModule, RouterLink, SubmitButton],
+  standalone: true,
 })
 export class CreateRecipe {
   protected readonly recipeService = inject(RecipeService);

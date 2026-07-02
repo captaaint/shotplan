@@ -1,14 +1,13 @@
 import { Component, signal, computed, inject } from '@angular/core';
-import { RecipeModel } from '../app/models';
-import { ReactiveFormsModule, FormBuilder, FormsModule } from '@angular/forms';
 import { RecipeService } from './recipeservice';
 import { RouterLink } from '@angular/router';
+import { FormsModule } from '@angular/forms';
 
 @Component({
   selector: 'recipe-list',
   templateUrl: './recipelist.html',
   standalone: true,
-  imports: [ReactiveFormsModule, FormsModule, RouterLink],
+  imports: [RouterLink, FormsModule],
 })
 export class RecipeList {
   constructor() {
