@@ -9,14 +9,13 @@
     />
     <div class="d-flex flex-wrap gap-2 mt-3">
       @for (recipe of filteredRecipes(); track recipe.id) {
-        <button type="button" class="btn btn-outline-primary" (click)="choose(recipe.id)">
+        <a type="button" class="btn btn-outline-primary" routerLink="/recipes/{{ recipe.id }}">
           Choose {{ recipe.name }}
           @if (recipe.favorite) {
             <span class="ms-1">*</span>
           }
-        </button>
+        </a>
       }
     </div>
   </div>
-  <recipe-details [recipe]="selectedRecipe()"></recipe-details>
 </div>

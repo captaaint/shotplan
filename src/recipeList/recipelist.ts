@@ -1,14 +1,14 @@
 import { Component, signal, computed, inject } from '@angular/core';
 import { RecipeModel } from '../app/models';
-import { RecipeDetails } from './recipedetails';
 import { FormsModule } from '@angular/forms';
 import { RecipeService } from './recipeservice';
+import { RouterLink } from '@angular/router';
 
 @Component({
   selector: 'recipe-list',
   templateUrl: './recipelist.html',
   standalone: true,
-  imports: [RecipeDetails, FormsModule],
+  imports: [FormsModule, RouterLink],
 })
 export class RecipeList {
   constructor() {
@@ -22,6 +22,7 @@ export class RecipeList {
     this.selectedRecipe.set(
       this.recipeService.getRecipeById(recipeId) || this.recipeService.getRecipes()[0],
     );
+
     console.log(`You chose: ${this.selectedRecipe()?.name}`);
   }
 
