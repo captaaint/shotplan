@@ -1,9 +1,10 @@
 <a class="btn btn-primary mb-3" routerLink="/recipes">Back to Recipe List</a>
+
 <div class="card shadow-sm mb-4 p-3">
-  <form [formGroup]="recipeForm" (ngSubmit)="submit()">
+  <form (submit)="submit($event)">
     <div class="mb-3">
       <label for="recipeName" class="form-label">Recipe Name</label>
-      <input type="text" id="recipeName" class="form-control" formControlName="name" required />
+      <input id="recipeName" type="text" class="form-control" [formField]="recipeForm.name" />
     </div>
 
     <div class="mb-3">
@@ -11,10 +12,19 @@
       <textarea
         id="recipeDescription"
         class="form-control"
-        formControlName="description"
         rows="3"
-        required
+        [formField]="recipeForm.description"
       ></textarea>
+    </div>
+
+    <div class="mb-3">
+      <label for="recipeAuthorEmail" class="form-label">Author Email</label>
+      <input
+        id="recipeAuthorEmail"
+        type="email"
+        class="form-control"
+        [formField]="recipeForm.authorEmail"
+      />
     </div>
 
     <submit-button></submit-button>

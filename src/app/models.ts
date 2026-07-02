@@ -2,6 +2,7 @@ export interface RecipeModel {
   id: string;
   name: string;
   description: string;
+  authorEmail: string;
   ingredients: IngredientModel[];
   imageUrl: string;
   favorite?: boolean;

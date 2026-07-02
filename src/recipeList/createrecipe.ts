@@ -1,32 +1,38 @@
-import { Component, inject } from '@angular/core';
+import { Component, inject, signal } from '@angular/core';
+import { FormField, form } from '@angular/forms/signals';
 import { RecipeService } from './recipeservice';
-import { FormBuilder, ReactiveFormsModule } from '@angular/forms';
 import { RouterLink } from '@angular/router';
-import { SubmitButton } from "./submitbtn";
+import { SubmitButton } from './submitbtn';
 
 @Component({
   selector: 'create-recipe',
   templateUrl: './createrecipe.html',
-  imports: [ReactiveFormsModule, RouterLink, SubmitButton],
+  imports: [FormField, RouterLink, SubmitButton],
   standalone: true,
 })
 export class CreateRecipe {
   protected readonly recipeService = inject(RecipeService);
-  private readonly formBuilder = inject(FormBuilder);
+
+  protected readonly recipeModel = signal({
+    name: '',
+    description: '',
+    authorEmail: '',
+  });
+
+  protected readonly recipeForm = form(this.recipeModel);
+
   constructor() {
     console.log('CreateRecipe component initialized.');
   }
 
-  protected readonly recipeForm = this.formBuilder.group({
-    name: [''],
-    description: [''],
-  });
+  protected submit(event: Event): void {
+    event.preventDefault();
 
-  protected submit(): void {
     this.recipeService.addRecipe({
       id: Date.now().toString(),
-      name: this.recipeForm.value.name || 'Unnamed Recipe',
-      description: this.recipeForm.value.description || '',
+      name: this.recipeModel().name || 'Unnamed Recipe',
+      description: this.recipeModel().description || '',
+      authorEmail: this.recipeModel().authorEmail || '',
       ingredients: [],
       imageUrl: 'https://placehold.co/600x400/000000/FFFFFF/png',
     });
