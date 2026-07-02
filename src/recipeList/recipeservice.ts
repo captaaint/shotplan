@@ -15,4 +15,9 @@ export class RecipeService {
   getRecipeById(recipeId: string): RecipeModel | undefined {
     return this.recipes().find((r) => r.id === recipeId);
   }
+
+  addRecipe(recipe: RecipeModel): void {
+    this.recipes.update((currentRecipes) => [...currentRecipes, recipe]);
+    console.log(`Recipe added: ${recipe.name}`);
+  }
 }

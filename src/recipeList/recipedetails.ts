@@ -1,5 +1,4 @@
-import { Component, input, signal, computed, inject } from '@angular/core';
-import { RecipeModel } from '../app/models';
+import { Component, signal, computed, inject } from '@angular/core';
 import { ActivatedRoute, RouterModule } from '@angular/router';
 import { RecipeService } from './recipeservice';
 

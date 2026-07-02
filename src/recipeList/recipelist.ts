@@ -1,6 +1,6 @@
 import { Component, signal, computed, inject } from '@angular/core';
 import { RecipeModel } from '../app/models';
-import { FormsModule } from '@angular/forms';
+import { ReactiveFormsModule, FormBuilder, FormsModule } from '@angular/forms';
 import { RecipeService } from './recipeservice';
 import { RouterLink } from '@angular/router';
 
@@ -8,7 +8,7 @@ import { RouterLink } from '@angular/router';
   selector: 'recipe-list',
   templateUrl: './recipelist.html',
   standalone: true,
-  imports: [FormsModule, RouterLink],
+  imports: [ReactiveFormsModule, FormsModule, RouterLink],
 })
 export class RecipeList {
   constructor() {

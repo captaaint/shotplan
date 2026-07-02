@@ -1,8 +1,9 @@
 <div class="container py-4">
+  <a class="btn btn-primary mb-3" routerLink="/create-recipe">Create Recipe</a>
   <div class="card shadow-sm mb-4 p-3">
     <input
       type="text"
-      class="form-control w-full"
+      class="form-control"
       [ngModel]="query()"
       (ngModelChange)="query.set($event)"
       min="1"
