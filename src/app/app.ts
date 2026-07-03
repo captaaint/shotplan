@@ -1,5 +1,5 @@
-import { Component, computed, signal } from '@angular/core';
-import { CurrencyPipe, DatePipe } from '@angular/common';
+import { Component, PLATFORM_ID, computed, effect, inject, signal } from '@angular/core';
+import { CurrencyPipe, DatePipe, isPlatformBrowser } from '@angular/common';
 
 type SessionStatus = 'inquiry' | 'booked' | 'done';
 
@@ -20,6 +20,8 @@ interface Session {
   styleUrl: './app.scss',
 })
 export class App {
+  private readonly platformId = inject(PLATFORM_ID);
+
   protected readonly title = signal('Shotplan');
   protected readonly selectedSessionId = signal<string | null>(null);
   protected readonly sessions = signal<Session[]>([
@@ -83,6 +85,15 @@ export class App {
       .filter((session) => session.status === 'booked')
       .reduce((total, session) => total + session.price, 0),
   );
+
+  private readonly titleEffect = effect(() => {
+    if (!isPlatformBrowser(this.platformId)) {
+      return;
+    }
+
+    const session = this.selectedSession();
+    document.title = session ? `${session.clientName} - ${this.title()}` : this.title();
+  });
 
   protected selectSession(sessionId: string): void {
     this.selectedSessionId.set(sessionId);
