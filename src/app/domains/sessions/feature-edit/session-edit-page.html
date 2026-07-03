@@ -2,16 +2,27 @@
   <a page-actions class="back-link" routerLink="/sessions">Back to sessions</a>
 </app-page-header>
 
-@if (sessionStore.loading() || clientStore.loading()) {
+@if (
+  sessionStore.loading() ||
+  clientStore.loading() ||
+  locationStore.loading() ||
+  packageStore.loading()
+) {
   <app-loading-state message="Loading session"></app-loading-state>
 } @else if (sessionStore.error(); as error) {
   <app-error-state [message]="error" (retry)="retryLoad()"></app-error-state>
 } @else if (clientStore.error(); as error) {
   <app-error-state [message]="error" (retry)="clientStore.loadClients()"></app-error-state>
+} @else if (locationStore.error(); as error) {
+  <app-error-state [message]="error" (retry)="locationStore.loadLocations()"></app-error-state>
+} @else if (packageStore.error(); as error) {
+  <app-error-state [message]="error" (retry)="packageStore.loadPackages()"></app-error-state>
 } @else if (session(); as session) {
   <app-session-form
     submitLabel="Update session"
     [clients]="clientStore.clients()"
+    [locations]="locationStore.locations()"
+    [packages]="packageStore.packages()"
     [session]="session"
     [saving]="submitting()"
     (save)="updateSession($event)"

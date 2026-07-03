@@ -1,0 +1,27 @@
+<app-page-header title="New lead" subtitle="Capture a fresh inquiry">
+  <a page-actions class="back-link" routerLink="/leads">Back to leads</a>
+</app-page-header>
+
+<form class="domain-form" [formGroup]="form" (ngSubmit)="submit()">
+  <app-form-field label="Full name" [control]="form.controls.fullName">
+    <input type="text" formControlName="fullName" />
+  </app-form-field>
+  <app-form-field label="Email" [control]="form.controls.email">
+    <input type="email" formControlName="email" />
+  </app-form-field>
+  <app-form-field label="Phone" [control]="form.controls.phone">
+    <input type="tel" formControlName="phone" />
+  </app-form-field>
+  <app-form-field label="Session type" [control]="form.controls.sessionType">
+    <input type="text" formControlName="sessionType" />
+  </app-form-field>
+  <app-form-field label="Source" [control]="form.controls.source">
+    <input type="text" formControlName="source" />
+  </app-form-field>
+  <app-form-field label="Notes" [control]="form.controls.notes" [wide]="true">
+    <textarea rows="5" formControlName="notes"></textarea>
+  </app-form-field>
+  <div class="form-actions">
+    <button type="submit" mat-flat-button>Create lead</button>
+  </div>
+</form>

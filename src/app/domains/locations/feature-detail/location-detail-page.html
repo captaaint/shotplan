@@ -1,0 +1,24 @@
+<app-page-header title="Location detail" subtitle="Session place details">
+  <a page-actions class="back-link" routerLink="/locations">Back to locations</a>
+</app-page-header>
+
+@if (locationStore.loading()) {
+  <app-loading-state message="Loading location"></app-loading-state>
+} @else if (locationStore.error(); as error) {
+  <app-error-state
+    [message]="error"
+    (retry)="locationStore.loadLocation(id()).subscribe()"
+  ></app-error-state>
+} @else if (location(); as location) {
+  <section class="detail-panel">
+    <h1>{{ location.name }}</h1>
+    <p>{{ location.address }}</p>
+    <p>{{ location.indoor ? 'Indoor' : 'Outdoor' }}</p>
+    <p>{{ location.notes }}</p>
+  </section>
+} @else {
+  <app-empty-state
+    title="Location not found"
+    message="Return to locations and choose one."
+  ></app-empty-state>
+}

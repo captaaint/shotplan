@@ -10,6 +10,8 @@ import {
 import { FormField } from '../../../../shared/forms/form-field/form-field';
 import { endTimeAfterStartTimeValidator } from '../../../../shared/forms/validators/time-range.validator';
 import { Client } from '../../../clients/data-access/client.models';
+import { Location } from '../../../locations/data-access/location.models';
+import { PhotoPackage } from '../../../packages/data-access/package.models';
 import { CreateSessionRequest, Session, SessionStatus } from '../../data-access/session.models';
 
 @Component({
@@ -22,6 +24,8 @@ export class SessionForm {
   private readonly fb = inject(FormBuilder);
 
   readonly clients = input<Client[]>([]);
+  readonly locations = input<Location[]>([]);
+  readonly packages = input<PhotoPackage[]>([]);
   readonly session = input<Session | null>(null);
   readonly submitLabel = input('Save session');
   readonly saving = input(false);
@@ -30,6 +34,8 @@ export class SessionForm {
   protected readonly form = this.fb.nonNullable.group(
     {
       clientId: ['', Validators.required],
+      locationId: ['', Validators.required],
+      packageId: ['', Validators.required],
       type: ['', Validators.required],
       date: ['', Validators.required],
       startTime: ['', Validators.required],
@@ -55,6 +61,8 @@ export class SessionForm {
 
     this.form.patchValue({
       clientId: session.clientId,
+      locationId: session.locationId,
+      packageId: session.packageId,
       type: session.type,
       date: session.date,
       startTime: session.startTime,

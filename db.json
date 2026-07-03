@@ -4,6 +4,8 @@
       "id": "s-101",
       "clientId": "c-101",
       "clientName": "Anna Kovacs",
+      "locationId": "loc-101",
+      "packageId": "pkg-101",
       "type": "Portrait",
       "date": "2026-07-15",
       "startTime": "10:00",
@@ -21,6 +23,8 @@
       "id": "s-102",
       "clientId": "c-102",
       "clientName": "Mark",
+      "locationId": "loc-102",
+      "packageId": "pkg-102",
       "type": "Engagement",
       "date": "2026-07-18",
       "startTime": "17:00",
@@ -37,6 +41,8 @@
       "id": "s-103",
       "clientId": "c-103",
       "clientName": "Elena",
+      "locationId": "loc-103",
+      "packageId": "pkg-103",
       "type": "Family",
       "date": "2026-07-22",
       "startTime": "09:30",
@@ -54,6 +60,8 @@
       "id": "s-104",
       "clientId": "c-102",
       "clientName": "David",
+      "locationId": "loc-101",
+      "packageId": "pkg-101",
       "type": "Headshots",
       "date": "2026-07-29",
       "startTime": "14:00",
@@ -71,6 +79,8 @@
       "id": "s-105",
       "clientId": "c-101",
       "clientName": "Sophie",
+      "locationId": "loc-102",
+      "packageId": "pkg-103",
       "type": "Branding",
       "date": "2026-08-03",
       "startTime": "13:00",
@@ -82,6 +92,23 @@
         "Product interaction",
         "Social media crops"
       ]
+    },
+    {
+      "clientId": "c-101",
+      "clientName": "Test Client 6",
+      "locationId": "loc-101",
+      "packageId": "pkg-101",
+      "type": "Mini Session",
+      "date": "2026-08-10",
+      "startTime": "10:00",
+      "endTime": "11:00",
+      "price": 150,
+      "status": "booked",
+      "shotList": [
+        "Arrival portraits",
+        "Favorite detail shots"
+      ],
+      "id": "W18svmseWl4"
     }
   ],
   "clients": [
@@ -108,6 +135,74 @@
       "phone": "+36 20 333 3333",
       "instagramHandle": "@elenamorris",
       "notes": "Family shoot with two children."
+    }
+  ],
+  "leads": [
+    {
+      "id": "lead-101",
+      "fullName": "Mira Stone",
+      "email": "mira@example.com",
+      "phone": "+36 20 444 4444",
+      "sessionType": "Branding",
+      "source": "Instagram",
+      "status": "new",
+      "notes": "Asked about a September brand shoot."
+    },
+    {
+      "id": "lead-102",
+      "fullName": "Jon Bell",
+      "email": "jon@example.com",
+      "phone": "+36 20 555 5555",
+      "sessionType": "Family",
+      "source": "Referral",
+      "status": "contacted",
+      "notes": "Wants weekend availability."
+    }
+  ],
+  "locations": [
+    {
+      "id": "loc-101",
+      "name": "Studio North",
+      "address": "12 Gallery Street",
+      "indoor": true,
+      "notes": "Best for headshots and portraits."
+    },
+    {
+      "id": "loc-102",
+      "name": "Riverside Walk",
+      "address": "Danube Promenade",
+      "indoor": false,
+      "notes": "Golden hour location with wide backgrounds."
+    },
+    {
+      "id": "loc-103",
+      "name": "Client Home",
+      "address": "Provided after booking",
+      "indoor": true,
+      "notes": "Use for family lifestyle sessions."
+    }
+  ],
+  "packages": [
+    {
+      "id": "pkg-101",
+      "name": "Essential",
+      "price": 180,
+      "durationMinutes": 60,
+      "deliverables": "15 edited images"
+    },
+    {
+      "id": "pkg-102",
+      "name": "Story",
+      "price": 420,
+      "durationMinutes": 120,
+      "deliverables": "40 edited images and gallery"
+    },
+    {
+      "id": "pkg-103",
+      "name": "Brand Day",
+      "price": 560,
+      "durationMinutes": 180,
+      "deliverables": "80 edited images and usage set"
     }
   ],
   "$schema": "./node_modules/json-server/schema.json"

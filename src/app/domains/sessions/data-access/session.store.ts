@@ -171,6 +171,8 @@ export class SessionStore {
     const newSession: CreateSessionRequest = {
       clientId: 'c-101',
       clientName: `Test Client ${sessionNumber}`,
+      locationId: 'loc-101',
+      packageId: 'pkg-101',
       type: 'Mini Session',
       date: '2026-08-10',
       startTime: '10:00',

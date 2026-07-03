@@ -4,14 +4,22 @@
 
 @if (clientStore.loading()) {
   <app-loading-state message="Loading clients"></app-loading-state>
+} @else if (locationStore.loading() || packageStore.loading()) {
+  <app-loading-state message="Loading session options"></app-loading-state>
 } @else if (clientStore.error(); as error) {
   <app-error-state [message]="error" (retry)="clientStore.loadClients()"></app-error-state>
+} @else if (locationStore.error(); as error) {
+  <app-error-state [message]="error" (retry)="locationStore.loadLocations()"></app-error-state>
+} @else if (packageStore.error(); as error) {
+  <app-error-state [message]="error" (retry)="packageStore.loadPackages()"></app-error-state>
 } @else if (sessionStore.error(); as error) {
   <app-error-state [message]="error" (retry)="sessionStore.loadSessions()"></app-error-state>
 } @else {
   <app-session-form
     submitLabel="Create session"
     [clients]="clientStore.clients()"
+    [locations]="locationStore.locations()"
+    [packages]="packageStore.packages()"
     [saving]="submitting()"
     (save)="createSession($event)"
   ></app-session-form>

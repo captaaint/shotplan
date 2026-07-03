@@ -8,6 +8,8 @@ import { ErrorState } from '../../../shared/ui/error-state/error-state';
 import { LoadingState } from '../../../shared/ui/loading-state/loading-state';
 import { PageHeader } from '../../../shared/ui/page-header/page-header';
 import { ClientStore } from '../../clients/data-access/client.store';
+import { LocationStore } from '../../locations/data-access/location.store';
+import { PackageStore } from '../../packages/data-access/package.store';
 import { SessionForm } from '../components/session-form/session-form';
 import { CreateSessionRequest } from '../data-access/session.models';
 import { SessionStore } from '../data-access/session.store';
@@ -24,6 +26,8 @@ export class SessionEditPage implements HasUnsavedChanges {
   private readonly router = inject(Router);
   private readonly notificationService = inject(NotificationService);
   protected readonly clientStore = inject(ClientStore);
+  protected readonly locationStore = inject(LocationStore);
+  protected readonly packageStore = inject(PackageStore);
   protected readonly sessionStore = inject(SessionStore);
 
   private readonly sessionForm = viewChild(SessionForm);
@@ -32,6 +36,8 @@ export class SessionEditPage implements HasUnsavedChanges {
 
   private readonly loadSessionEffect = effect(() => {
     this.sessionStore.loadSession(this.id()).subscribe();
+    this.locationStore.loadLocations();
+    this.packageStore.loadPackages();
   });
 
   protected updateSession(session: CreateSessionRequest): void {
@@ -54,6 +60,8 @@ export class SessionEditPage implements HasUnsavedChanges {
   protected retryLoad(): void {
     this.sessionStore.loadSession(this.id()).subscribe();
     this.clientStore.loadClients();
+    this.locationStore.loadLocations();
+    this.packageStore.loadPackages();
   }
 
   hasUnsavedChanges(): boolean {

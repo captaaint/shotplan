@@ -1,0 +1,38 @@
+<app-page-header title="Locations" subtitle="Places available for sessions">
+  <a page-actions class="primary-link" routerLink="/locations/new">New location</a>
+</app-page-header>
+
+@if (locationStore.loading()) {
+  <app-loading-state message="Loading locations"></app-loading-state>
+} @else if (locationStore.error(); as error) {
+  <app-error-state [message]="error" (retry)="locationStore.loadLocations()"></app-error-state>
+} @else if (locationStore.locations().length) {
+  <div class="table-panel">
+    <table mat-table [dataSource]="locationStore.locations()">
+      <ng-container matColumnDef="name">
+        <th mat-header-cell *matHeaderCellDef>Name</th>
+        <td mat-cell *matCellDef="let location">{{ location.name }}</td>
+      </ng-container>
+      <ng-container matColumnDef="address">
+        <th mat-header-cell *matHeaderCellDef>Address</th>
+        <td mat-cell *matCellDef="let location">{{ location.address }}</td>
+      </ng-container>
+      <ng-container matColumnDef="indoor">
+        <th mat-header-cell *matHeaderCellDef>Type</th>
+        <td mat-cell *matCellDef="let location">{{ location.indoor ? 'Indoor' : 'Outdoor' }}</td>
+      </ng-container>
+      <ng-container matColumnDef="actions">
+        <th mat-header-cell *matHeaderCellDef>Actions</th>
+        <td mat-cell *matCellDef="let location">
+          <a mat-icon-button [routerLink]="['/locations', location.id]" aria-label="View location">
+            <mat-icon>visibility</mat-icon>
+          </a>
+        </td>
+      </ng-container>
+      <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+      <tr mat-row *matRowDef="let row; columns: displayedColumns"></tr>
+    </table>
+  </div>
+} @else {
+  <app-empty-state title="No locations yet" message="Create the first location."></app-empty-state>
+}

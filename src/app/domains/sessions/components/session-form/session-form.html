@@ -8,6 +8,24 @@
     </select>
   </app-form-field>
 
+  <app-form-field label="Location" [control]="form.controls.locationId">
+    <select formControlName="locationId">
+      <option value="">Choose a location</option>
+      @for (location of locations(); track location.id) {
+        <option [value]="location.id">{{ location.name }}</option>
+      }
+    </select>
+  </app-form-field>
+
+  <app-form-field label="Package" [control]="form.controls.packageId">
+    <select formControlName="packageId">
+      <option value="">Choose a package</option>
+      @for (packageOption of packages(); track packageOption.id) {
+        <option [value]="packageOption.id">{{ packageOption.name }}</option>
+      }
+    </select>
+  </app-form-field>
+
   <app-form-field label="Session type" [control]="form.controls.type">
     <input type="text" formControlName="type" />
   </app-form-field>

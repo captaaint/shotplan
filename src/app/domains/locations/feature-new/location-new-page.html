@@ -1,0 +1,22 @@
+<app-page-header title="New location" subtitle="Add a session place">
+  <a page-actions class="back-link" routerLink="/locations">Back to locations</a>
+</app-page-header>
+
+<form class="domain-form" [formGroup]="form" (ngSubmit)="submit()">
+  <app-form-field label="Name" [control]="form.controls.name">
+    <input type="text" formControlName="name" />
+  </app-form-field>
+  <app-form-field label="Address" [control]="form.controls.address">
+    <input type="text" formControlName="address" />
+  </app-form-field>
+  <label class="checkbox-field">
+    <input type="checkbox" formControlName="indoor" />
+    Indoor location
+  </label>
+  <app-form-field label="Notes" [control]="form.controls.notes" [wide]="true">
+    <textarea rows="5" formControlName="notes"></textarea>
+  </app-form-field>
+  <div class="form-actions">
+    <button type="submit" mat-flat-button>Create location</button>
+  </div>
+</form>

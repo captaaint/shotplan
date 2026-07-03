@@ -1,0 +1,21 @@
+<app-page-header title="New package" subtitle="Create an offer">
+  <a page-actions class="back-link" routerLink="/packages">Back to packages</a>
+</app-page-header>
+
+<form class="domain-form" [formGroup]="form" (ngSubmit)="submit()">
+  <app-form-field label="Name" [control]="form.controls.name">
+    <input type="text" formControlName="name" />
+  </app-form-field>
+  <app-form-field label="Price" [control]="form.controls.price">
+    <input type="number" min="0" formControlName="price" />
+  </app-form-field>
+  <app-form-field label="Duration" [control]="form.controls.durationMinutes">
+    <input type="number" min="15" formControlName="durationMinutes" />
+  </app-form-field>
+  <app-form-field label="Deliverables" [control]="form.controls.deliverables" [wide]="true">
+    <textarea rows="4" formControlName="deliverables"></textarea>
+  </app-form-field>
+  <div class="form-actions">
+    <button type="submit" mat-flat-button>Create package</button>
+  </div>
+</form>
