@@ -1,6 +1,6 @@
 import { HttpInterceptorFn } from '@angular/common/http';
 
-const API_BASE_URL = 'http://localhost:3000';
+import { API_BASE_URL } from '../config/api.config';
 
 export const apiBaseUrlInterceptor: HttpInterceptorFn = (request, next) => {
   if (/^https?:\/\//.test(request.url)) {
