@@ -10,9 +10,13 @@
   <ul class="client-list">
     @for (client of clientStore.clients(); track client.id) {
       <li class="client-card">
-        <div>
-          <h2>{{ client.fullName }}</h2>
-          <p>{{ client.email }}</p>
+        <div class="client-card-header">
+          <div>
+            <h2>{{ client.fullName }}</h2>
+            <p>{{ client.email }}</p>
+          </div>
+
+          <a class="edit-link" [routerLink]="['/clients', client.id, 'edit']">Edit</a>
         </div>
 
         <dl>

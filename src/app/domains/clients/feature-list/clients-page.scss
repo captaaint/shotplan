@@ -30,6 +30,23 @@
   background: #ffffff;
 }
 
+.client-card-header {
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+  gap: 1rem;
+}
+
+.edit-link {
+  color: #7c3aed;
+  font-weight: 700;
+  text-decoration: none;
+}
+
+.edit-link:hover {
+  text-decoration: underline;
+}
+
 h2 {
   margin: 0 0 0.4rem;
   font-size: 1.25rem;

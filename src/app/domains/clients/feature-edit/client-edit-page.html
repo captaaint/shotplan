@@ -1,0 +1,21 @@
+<app-page-header title="Edit client" subtitle="Update the selected contact">
+  <a page-actions class="back-link" routerLink="/clients">Back to clients</a>
+</app-page-header>
+
+@if (clientStore.loading()) {
+  <app-loading-state message="Loading client"></app-loading-state>
+} @else if (clientStore.error(); as error) {
+  <app-error-state [message]="error" (retry)="retryLoad()"></app-error-state>
+} @else if (client(); as client) {
+  <app-client-form
+    submitLabel="Update client"
+    [client]="client"
+    [saving]="submitting()"
+    (save)="updateClient($event)"
+  ></app-client-form>
+} @else {
+  <app-empty-state
+    title="Client not found"
+    message="Return to the clients list and choose an existing client."
+  ></app-empty-state>
+}

@@ -23,7 +23,7 @@
       "type": "Family",
       "date": "2026-07-22",
       "price": 320,
-      "status": "booked",
+      "status": "done",
       "galleryUrl": "/gallery/elena-family"
     },
     {
@@ -42,6 +42,14 @@
       "date": "2026-08-03",
       "price": 560,
       "status": "inquiry"
+    },
+    {
+      "id": "2bnTInQYGKE",
+      "clientName": "Test Client 6",
+      "type": "Mini Session",
+      "date": "2026-08-10",
+      "price": 150,
+      "status": "booked"
     }
   ],
   "clients": [
@@ -69,5 +77,6 @@
       "instagramHandle": "@elenamorris",
       "notes": "Family shoot with two children."
     }
-  ]
+  ],
+  "$schema": "./node_modules/json-server/schema.json"
 }

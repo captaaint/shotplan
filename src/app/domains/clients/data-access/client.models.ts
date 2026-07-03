@@ -8,3 +8,4 @@ export interface Client {
 }
 
 export type CreateClientRequest = Omit<Client, 'id'>;
+export type UpdateClientRequest = Partial<CreateClientRequest>;
