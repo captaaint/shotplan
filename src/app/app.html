@@ -1,14 +1,19 @@
-<h1>ShotPlan</h1>
-<h2>Next session:</h2>
+<h1>{{ title() }}</h1>
+<h2>Upcoming sessions</h2>
+
 <ul>
-  <li>
-    {{ session().name }}
-  </li>
-  <li>
-    {{ session().type }}
-  </li>
-  <li>
-    {{ session().date | date: 'yyyy-MM-dd' }}
-  </li>
+  @for (session of sessions(); track session.id) {
+    <li>
+      <strong>{{ session.clientName }}</strong>
+      <span> - {{ session.type }}</span>
+      <span> - {{ session.date | date: 'yyyy-MM-dd' }}</span>
+      <span> - {{ session.status }}</span>
+
+      @if (session.galleryUrl) {
+        <a [href]="session.galleryUrl">Gallery</a>
+      }
+    </li>
+  } @empty {
+    <li>No sessions scheduled yet.</li>
+  }
 </ul>
-<a [href]="session().galleryLink">Gallery link</a>
