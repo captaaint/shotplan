@@ -1,11 +1,12 @@
 import { Component, effect, input, output, inject } from '@angular/core';
 import { FormBuilder, ReactiveFormsModule, Validators } from '@angular/forms';
 
+import { FormField } from '../../../../shared/forms/form-field/form-field';
 import { Client, CreateClientRequest } from '../../data-access/client.models';
 
 @Component({
   selector: 'app-client-form',
-  imports: [ReactiveFormsModule],
+  imports: [FormField, ReactiveFormsModule],
   templateUrl: './client-form.html',
   styleUrl: './client-form.scss',
 })

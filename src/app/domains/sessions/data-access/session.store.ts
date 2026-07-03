@@ -152,6 +152,8 @@ export class SessionStore {
       clientName: `Test Client ${sessionNumber}`,
       type: 'Mini Session',
       date: '2026-08-10',
+      startTime: '10:00',
+      endTime: '11:00',
       price: 150,
       status: 'booked',
       shotList: ['Arrival portraits', 'Favorite detail shots'],

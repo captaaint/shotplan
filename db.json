@@ -3,17 +3,15 @@
     {
       "id": "s-101",
       "clientId": "c-101",
-      "clientName": "Anna",
+      "clientName": "Anna Kovacs",
       "type": "Portrait",
       "date": "2026-07-15",
+      "startTime": "10:00",
+      "endTime": "11:30",
       "price": 240,
       "status": "booked",
       "galleryUrl": "/gallery/anna-portrait",
-      "shotList": [
-        "Window light portraits",
-        "Close-up headshots",
-        "Profile detail"
-      ]
+      "shotList": ["Window light portraits", "Close-up headshots", "Profile detail"]
     },
     {
       "id": "s-102",
@@ -21,13 +19,11 @@
       "clientName": "Mark",
       "type": "Engagement",
       "date": "2026-07-18",
+      "startTime": "17:00",
+      "endTime": "19:00",
       "price": 420,
       "status": "inquiry",
-      "shotList": [
-        "Ring detail",
-        "Walking portraits",
-        "Wide location frame"
-      ]
+      "shotList": ["Ring detail", "Walking portraits", "Wide location frame"]
     },
     {
       "id": "s-103",
@@ -35,14 +31,12 @@
       "clientName": "Elena",
       "type": "Family",
       "date": "2026-07-22",
+      "startTime": "09:30",
+      "endTime": "11:00",
       "price": 320,
       "status": "done",
       "galleryUrl": "/gallery/elena-family",
-      "shotList": [
-        "Full family portrait",
-        "Kids together",
-        "Parent portraits"
-      ]
+      "shotList": ["Full family portrait", "Kids together", "Parent portraits"]
     },
     {
       "id": "s-104",
@@ -50,14 +44,12 @@
       "clientName": "David",
       "type": "Headshots",
       "date": "2026-07-29",
+      "startTime": "14:00",
+      "endTime": "15:00",
       "price": 180,
       "status": "done",
       "galleryUrl": "/gallery/david-headshots",
-      "shotList": [
-        "LinkedIn crop",
-        "Horizontal website crop",
-        "Black background option"
-      ]
+      "shotList": ["LinkedIn crop", "Horizontal website crop", "Black background option"]
     },
     {
       "id": "s-105",
@@ -65,13 +57,11 @@
       "clientName": "Sophie",
       "type": "Branding",
       "date": "2026-08-03",
+      "startTime": "13:00",
+      "endTime": "16:00",
       "price": 560,
       "status": "inquiry",
-      "shotList": [
-        "Workspace portraits",
-        "Product interaction",
-        "Social media crops"
-      ]
+      "shotList": ["Workspace portraits", "Product interaction", "Social media crops"]
     },
     {
       "id": "2bnTInQYGKE",
@@ -79,12 +69,11 @@
       "clientName": "Test Client 6",
       "type": "Mini Session",
       "date": "2026-08-10",
+      "startTime": "10:00",
+      "endTime": "11:00",
       "price": 150,
       "status": "booked",
-      "shotList": [
-        "Arrival portraits",
-        "Favorite detail shots"
-      ]
+      "shotList": ["Arrival portraits", "Favorite detail shots"]
     },
     {
       "clientId": "c-101",
@@ -93,10 +82,7 @@
       "date": "2026-08-10",
       "price": 150,
       "status": "booked",
-      "shotList": [
-        "Arrival portraits",
-        "Favorite detail shots"
-      ],
+      "shotList": ["Arrival portraits", "Favorite detail shots"],
       "id": "ADpd5MHfuSY"
     }
   ],

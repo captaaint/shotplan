@@ -1,39 +1,23 @@
 <form class="client-form" [formGroup]="form" (ngSubmit)="submit()">
-  <label>
-    <span>Full name</span>
+  <app-form-field label="Full name" [control]="form.controls.fullName">
     <input type="text" formControlName="fullName" autocomplete="name" />
-    @if (form.controls.fullName.touched && form.controls.fullName.hasError('required')) {
-      <small>Full name is required.</small>
-    }
-  </label>
+  </app-form-field>
 
-  <label>
-    <span>Email</span>
+  <app-form-field label="Email" [control]="form.controls.email">
     <input type="email" formControlName="email" autocomplete="email" />
-    @if (form.controls.email.touched && form.controls.email.hasError('required')) {
-      <small>Email is required.</small>
-    } @else if (form.controls.email.touched && form.controls.email.hasError('email')) {
-      <small>Enter a valid email address.</small>
-    }
-  </label>
+  </app-form-field>
 
-  <label>
-    <span>Phone</span>
+  <app-form-field label="Phone" [control]="form.controls.phone">
     <input type="tel" formControlName="phone" autocomplete="tel" />
-    @if (form.controls.phone.touched && form.controls.phone.hasError('required')) {
-      <small>Phone is required.</small>
-    }
-  </label>
+  </app-form-field>
 
-  <label>
-    <span>Instagram handle</span>
+  <app-form-field label="Instagram handle" [control]="form.controls.instagramHandle">
     <input type="text" formControlName="instagramHandle" autocomplete="off" />
-  </label>
+  </app-form-field>
 
-  <label class="wide-field">
-    <span>Notes</span>
+  <app-form-field label="Notes" [control]="form.controls.notes" [wide]="true">
     <textarea rows="5" formControlName="notes"></textarea>
-  </label>
+  </app-form-field>
 
   <div class="form-actions">
     <button type="submit" [disabled]="form.invalid || saving()">

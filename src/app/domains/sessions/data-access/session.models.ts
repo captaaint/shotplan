@@ -6,6 +6,8 @@ export interface Session {
   clientName: string;
   type: string;
   date: string;
+  startTime: string;
+  endTime: string;
   price: number;
   status: SessionStatus;
   galleryUrl?: string;

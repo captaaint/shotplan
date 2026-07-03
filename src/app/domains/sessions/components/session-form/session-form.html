@@ -1,56 +1,51 @@
 <form class="session-form" [formGroup]="form" (ngSubmit)="submit()">
-  <label>
-    <span>Client</span>
+  <app-form-field label="Client" [control]="form.controls.clientId">
     <select formControlName="clientId">
       <option value="">Choose a client</option>
       @for (client of clients(); track client.id) {
         <option [value]="client.id">{{ client.fullName }}</option>
       }
     </select>
-    @if (form.controls.clientId.touched && form.controls.clientId.hasError('required')) {
-      <small>Client is required.</small>
-    }
-  </label>
+  </app-form-field>
 
-  <label>
-    <span>Session type</span>
+  <app-form-field label="Session type" [control]="form.controls.type">
     <input type="text" formControlName="type" />
-    @if (form.controls.type.touched && form.controls.type.hasError('required')) {
-      <small>Session type is required.</small>
-    }
-  </label>
+  </app-form-field>
 
-  <label>
-    <span>Date</span>
+  <app-form-field label="Date" [control]="form.controls.date">
     <input type="date" formControlName="date" />
-    @if (form.controls.date.touched && form.controls.date.hasError('required')) {
-      <small>Date is required.</small>
-    }
-  </label>
+  </app-form-field>
 
-  <label>
-    <span>Price</span>
+  <app-form-field label="Start time" [control]="form.controls.startTime">
+    <input type="time" formControlName="startTime" />
+  </app-form-field>
+
+  <app-form-field label="End time" [control]="form.controls.endTime">
+    <input type="time" formControlName="endTime" />
+  </app-form-field>
+
+  <app-form-field label="Price" [control]="form.controls.price">
     <input type="number" formControlName="price" min="0" />
-    @if (form.controls.price.touched && form.controls.price.hasError('required')) {
-      <small>Price is required.</small>
-    } @else if (form.controls.price.touched && form.controls.price.hasError('min')) {
-      <small>Price cannot be negative.</small>
-    }
-  </label>
+  </app-form-field>
 
-  <label>
-    <span>Status</span>
+  <app-form-field label="Status" [control]="form.controls.status">
     <select formControlName="status">
       <option value="inquiry">Inquiry</option>
       <option value="booked">Booked</option>
       <option value="done">Done</option>
     </select>
-  </label>
+  </app-form-field>
 
-  <label>
-    <span>Gallery URL</span>
+  <app-form-field label="Gallery URL" [control]="form.controls.galleryUrl">
     <input type="text" formControlName="galleryUrl" />
-  </label>
+  </app-form-field>
+
+  <app-form-field
+    label="Session time"
+    [control]="form"
+    [wide]="true"
+    [errorOnly]="true"
+  ></app-form-field>
 
   <fieldset class="wide-field" formArrayName="shotList">
     <legend>Shot list</legend>
@@ -58,13 +53,9 @@
     <div class="shot-list">
       @for (shot of shotList.controls; track $index) {
         <div class="shot-row">
-          <label>
-            <span>Shot {{ $index + 1 }}</span>
+          <app-form-field [label]="'Shot ' + ($index + 1)" [control]="shot">
             <input type="text" [formControlName]="$index" />
-            @if (shot.touched && shot.hasError('required')) {
-              <small>Shot description is required.</small>
-            }
-          </label>
+          </app-form-field>
 
           <button type="button" class="secondary-action" (click)="removeShot($index)">
             Remove

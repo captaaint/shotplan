@@ -7,12 +7,14 @@ import {
   Validators,
 } from '@angular/forms';
 
+import { FormField } from '../../../../shared/forms/form-field/form-field';
+import { endTimeAfterStartTimeValidator } from '../../../../shared/forms/validators/time-range.validator';
 import { Client } from '../../../clients/data-access/client.models';
 import { CreateSessionRequest, Session, SessionStatus } from '../../data-access/session.models';
 
 @Component({
   selector: 'app-session-form',
-  imports: [ReactiveFormsModule],
+  imports: [FormField, ReactiveFormsModule],
   templateUrl: './session-form.html',
   styleUrl: './session-form.scss',
 })
@@ -25,15 +27,20 @@ export class SessionForm {
   readonly saving = input(false);
   readonly save = output<CreateSessionRequest>();
 
-  protected readonly form = this.fb.nonNullable.group({
-    clientId: ['', Validators.required],
-    type: ['', Validators.required],
-    date: ['', Validators.required],
-    price: [0, [Validators.required, Validators.min(0)]],
-    status: this.fb.nonNullable.control<SessionStatus>('inquiry', Validators.required),
-    galleryUrl: [''],
-    shotList: this.fb.array<FormControl<string>>([this.createShotControl()]),
-  });
+  protected readonly form = this.fb.nonNullable.group(
+    {
+      clientId: ['', Validators.required],
+      type: ['', Validators.required],
+      date: ['', Validators.required],
+      startTime: ['', Validators.required],
+      endTime: ['', Validators.required],
+      price: [0, [Validators.required, Validators.min(0)]],
+      status: this.fb.nonNullable.control<SessionStatus>('inquiry', Validators.required),
+      galleryUrl: [''],
+      shotList: this.fb.array<FormControl<string>>([this.createShotControl()]),
+    },
+    { validators: endTimeAfterStartTimeValidator() },
+  );
 
   protected get shotList(): FormArray<FormControl<string>> {
     return this.form.controls.shotList;
@@ -50,6 +57,8 @@ export class SessionForm {
       clientId: session.clientId,
       type: session.type,
       date: session.date,
+      startTime: session.startTime,
+      endTime: session.endTime,
       price: session.price,
       status: session.status,
       galleryUrl: session.galleryUrl ?? '',

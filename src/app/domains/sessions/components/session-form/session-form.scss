@@ -8,13 +8,11 @@
   background: #ffffff;
 }
 
-label,
 .shot-list {
   display: grid;
   gap: 0.4rem;
 }
 
-span,
 legend {
   color: #374151;
   font-weight: 700;
@@ -34,11 +32,6 @@ input:focus,
 select:focus {
   border-color: #2563eb;
   outline: 3px solid #dbeafe;
-}
-
-small {
-  color: #b91c1c;
-  font-weight: 700;
 }
 
 fieldset {
