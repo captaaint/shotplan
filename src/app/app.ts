@@ -20,6 +20,7 @@ interface Session {
 })
 export class App {
   protected readonly title = signal('Shotplan');
+  protected readonly selectedSessionId = signal<string | null>(null);
   protected readonly sessions = signal<Session[]>([
     {
       id: 's-101',
@@ -60,4 +61,8 @@ export class App {
       status: 'inquiry',
     },
   ]);
+
+  protected selectSession(sessionId: string): void {
+    this.selectedSessionId.set(sessionId);
+  }
 }

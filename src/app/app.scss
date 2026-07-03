@@ -34,6 +34,22 @@ h2 {
   border: 1px solid #d1d5db;
   border-radius: 0.75rem;
   background: #ffffff;
+  cursor: pointer;
+  transition:
+    border-color 160ms ease,
+    box-shadow 160ms ease,
+    transform 160ms ease;
+}
+
+.session-row:hover {
+  border-color: #9ca3af;
+  box-shadow: 0 10px 24px rgba(31, 41, 55, 0.08);
+  transform: translateY(-1px);
+}
+
+.session-row-selected {
+  border-color: #2563eb;
+  box-shadow: 0 0 0 3px rgba(37, 99, 235, 0.14);
 }
 
 .session-main {
@@ -77,4 +93,46 @@ h2 {
 
 .gallery-link:hover {
   text-decoration: underline;
+}
+
+.detail-panel {
+  margin-top: 1.5rem;
+  padding: 1.25rem;
+  border: 1px solid #d1d5db;
+  border-radius: 0.75rem;
+  background: #f9fafb;
+}
+
+.detail-kicker {
+  margin: 0 0 0.35rem;
+  color: #6b7280;
+  font-size: 0.875rem;
+  font-weight: 700;
+  text-transform: uppercase;
+}
+
+.detail-panel h3 {
+  margin: 0 0 1rem;
+  font-size: 1.5rem;
+}
+
+.detail-panel dl {
+  display: grid;
+  gap: 0.75rem;
+  margin: 0 0 1rem;
+}
+
+.detail-panel dl div {
+  display: grid;
+  gap: 0.2rem;
+}
+
+.detail-panel dt {
+  color: #6b7280;
+  font-size: 0.875rem;
+  font-weight: 700;
+}
+
+.detail-panel dd {
+  margin: 0;
 }
