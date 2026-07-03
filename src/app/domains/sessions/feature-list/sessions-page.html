@@ -17,24 +17,30 @@
 
 <app-search-box [(value)]="sessionStore.query"></app-search-box>
 
-<ul class="session-list">
-  @for (session of sessionStore.filteredSessions(); track session.id) {
-    <li class="session-list-item">
-      <app-session-card
-        class="session-card-link"
-        [routerLink]="['/sessions', session.id]"
-        [session]="session"
-        [selected]="sessionStore.selectedSessionId() === session.id"
-        (select)="sessionStore.selectSession($event)"
-        (markDone)="sessionStore.markSessionDone($event)"
-      ></app-session-card>
-    </li>
-  } @empty {
-    <li>
-      <app-empty-state
-        title="No sessions match your search"
-        message="Clear the search box to return to the full session list."
-      ></app-empty-state>
-    </li>
-  }
-</ul>
+@if (sessionStore.loading()) {
+  <app-loading-state message="Loading sessions"></app-loading-state>
+} @else if (sessionStore.error(); as error) {
+  <app-error-state [message]="error" (retry)="sessionStore.loadSessions()"></app-error-state>
+} @else {
+  <ul class="session-list">
+    @for (session of sessionStore.filteredSessions(); track session.id) {
+      <li class="session-list-item">
+        <app-session-card
+          class="session-card-link"
+          [routerLink]="['/sessions', session.id]"
+          [session]="session"
+          [selected]="sessionStore.selectedSessionId() === session.id"
+          (select)="sessionStore.selectSession($event)"
+          (markDone)="sessionStore.markSessionDone($event)"
+        ></app-session-card>
+      </li>
+    } @empty {
+      <li>
+        <app-empty-state
+          title="No sessions match your search"
+          message="Clear the search box to return to the full session list."
+        ></app-empty-state>
+      </li>
+    }
+  </ul>
+}

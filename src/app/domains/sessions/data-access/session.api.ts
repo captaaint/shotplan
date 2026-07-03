@@ -7,7 +7,7 @@ import { Session } from './session.models';
 @Injectable({ providedIn: 'root' })
 export class SessionApi {
   private readonly http = inject(HttpClient);
-  private readonly sessionsUrl = 'http://localhost:3000/sessions';
+  private readonly sessionsUrl = '/sessions';
 
   getSessions(): Observable<Session[]> {
     return this.http.get<Session[]>(this.sessionsUrl);

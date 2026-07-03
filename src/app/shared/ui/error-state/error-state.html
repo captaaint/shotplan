@@ -1,0 +1,8 @@
+<section class="error-state" role="alert">
+  <div>
+    <h3>{{ title() }}</h3>
+    <p>{{ message() }}</p>
+  </div>
+
+  <button type="button" (click)="retry.emit()">Retry</button>
+</section>

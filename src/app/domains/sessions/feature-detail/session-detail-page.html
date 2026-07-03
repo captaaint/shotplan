@@ -2,7 +2,11 @@
   <a page-actions class="back-link" routerLink="/sessions">Back to sessions</a>
 </app-page-header>
 
-@if (session(); as session) {
+@if (sessionStore.loading()) {
+  <app-loading-state message="Loading session"></app-loading-state>
+} @else if (sessionStore.error(); as error) {
+  <app-error-state [message]="error" (retry)="sessionStore.loadSessions()"></app-error-state>
+} @else if (session(); as session) {
   <section class="detail-panel" aria-label="Session details">
     <p class="detail-kicker">Selected session</p>
     <h1>{{ session.clientName }}</h1>

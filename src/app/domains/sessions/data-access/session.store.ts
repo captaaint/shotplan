@@ -11,10 +11,14 @@ export class SessionStore {
 
   private readonly sessionsSignal = signal<Session[]>([]);
   private readonly selectedSessionIdSignal = signal<string | null>(null);
+  private readonly loadingSignal = signal(false);
+  private readonly errorSignal = signal<string | null>(null);
 
   readonly query = signal('');
   readonly sessions = this.sessionsSignal.asReadonly();
   readonly selectedSessionId = this.selectedSessionIdSignal.asReadonly();
+  readonly loading = this.loadingSignal.asReadonly();
+  readonly error = this.errorSignal.asReadonly();
 
   readonly selectedSession = computed(() => {
     const selectedId = this.selectedSessionIdSignal();
@@ -51,9 +55,18 @@ export class SessionStore {
   }
 
   loadSessions(): void {
+    this.loadingSignal.set(true);
+    this.errorSignal.set(null);
+
     this.api.getSessions().subscribe({
-      next: (sessions) => this.sessionsSignal.set(sessions),
-      error: (error) => console.error('Could not load sessions', error),
+      next: (sessions) => {
+        this.sessionsSignal.set(sessions);
+        this.loadingSignal.set(false);
+      },
+      error: () => {
+        this.loadingSignal.set(false);
+        this.errorSignal.set('Could not load sessions. Check that the mock API is running.');
+      },
     });
   }
 
@@ -66,17 +79,23 @@ export class SessionStore {
   }
 
   markSessionDone(sessionId: string): void {
+    this.errorSignal.set(null);
+
     this.api.updateSession(sessionId, { status: 'done' }).subscribe({
       next: (updatedSession) => {
         this.sessionsSignal.update((sessions) =>
           sessions.map((session) => (session.id === sessionId ? updatedSession : session)),
         );
       },
-      error: (error) => console.error('Could not update session', error),
+      error: () => {
+        this.errorSignal.set('Could not update the session. Try again in a moment.');
+      },
     });
   }
 
   addTestSession(): void {
+    this.errorSignal.set(null);
+
     const sessionNumber = this.sessionsSignal().length + 1;
     const newSession: Session = {
       id: `s-${Date.now()}`,
@@ -92,7 +111,9 @@ export class SessionStore {
         this.sessionsSignal.update((sessions) => [...sessions, createdSession]);
         this.selectedSessionIdSignal.set(createdSession.id);
       },
-      error: (error) => console.error('Could not create session', error),
+      error: () => {
+        this.errorSignal.set('Could not create the test session. Try again in a moment.');
+      },
     });
   }
 }

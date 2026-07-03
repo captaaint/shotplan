@@ -4,12 +4,23 @@ import { RouterLink } from '@angular/router';
 import { SessionCard } from '../components/session-card/session-card';
 import { SessionStore } from '../data-access/session.store';
 import { EmptyState } from '../../../shared/ui/empty-state/empty-state';
+import { ErrorState } from '../../../shared/ui/error-state/error-state';
+import { LoadingState } from '../../../shared/ui/loading-state/loading-state';
 import { PageHeader } from '../../../shared/ui/page-header/page-header';
 import { SearchBox } from '../../../shared/ui/search-box/search-box';
 
 @Component({
   selector: 'app-sessions-page',
-  imports: [CurrencyPipe, EmptyState, PageHeader, RouterLink, SearchBox, SessionCard],
+  imports: [
+    CurrencyPipe,
+    EmptyState,
+    ErrorState,
+    LoadingState,
+    PageHeader,
+    RouterLink,
+    SearchBox,
+    SessionCard,
+  ],
   templateUrl: './sessions-page.html',
   styleUrl: './sessions-page.scss',
 })
