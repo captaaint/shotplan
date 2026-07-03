@@ -1,59 +1,118 @@
-# Shotplan
+# ShotPlan
 
-This project was generated using [Angular CLI](https://github.com/angular/angular-cli) version 21.2.18.
+ShotPlan is an Angular learning project for building a small photography planning app. It is split into modules and phases in [LEARNING-PLAN.md](./LEARNING-PLAN.md), with each phase adding a real piece of application architecture.
 
-## Development server
+The app currently includes dashboards and CRUD-style domain screens for sessions, clients, leads, locations, and packages. Data is served by a local Express API backed by `db.json`.
 
-To start a local development server, run:
+## Tech Stack
 
-```bash
-ng serve
+- Angular 21
+- Angular Material
+- Angular Signals
+- Angular Router with lazy domain routes
+- Reactive forms
+- Angular SSR
+- Express
+- Vitest
+- Prettier
+
+## Project Structure
+
+```text
+src/app/
+  core/        app-wide config, layout, guards, services, HTTP interceptors
+  domains/    feature domains such as sessions, clients, leads, locations, packages
+  shared/     reusable UI and form components
 ```
 
-Once the server is running, open your browser and navigate to `http://localhost:4200/`. The application will automatically reload whenever you modify any of the source files.
+Each domain keeps its own routes, data-access services/stores, feature pages, and local components.
 
-## Code scaffolding
+## Getting Started
 
-Angular CLI includes powerful code scaffolding tools. To generate a new component, run:
-
-```bash
-ng generate component component-name
-```
-
-For a complete list of available schematics (such as `components`, `directives`, or `pipes`), run:
+Install dependencies:
 
 ```bash
-ng generate --help
+npm install
 ```
 
-## Building
-
-To build the project run:
+Build the app:
 
 ```bash
-ng build
+npm run build
 ```
 
-This will compile your project and store the build artifacts in the `dist/` directory. By default, the production build optimizes your application for performance and speed.
-
-## Running unit tests
-
-To execute unit tests with the [Vitest](https://vitest.dev/) test runner, use the following command:
+Start the local API and SSR server:
 
 ```bash
-ng test
+npm run api
 ```
 
-## Running end-to-end tests
+The built app and API run at:
 
-For end-to-end (e2e) testing, run:
+```text
+http://localhost:4000
+http://localhost:4000/api
+```
+
+For day-to-day Angular development, run the API server in one terminal and the Angular dev server in another:
 
 ```bash
-ng e2e
+npm run api
+npm start
 ```
 
-Angular CLI does not come with an end-to-end testing framework by default. You can choose one that suits your needs.
+Then open:
 
-## Additional Resources
+```text
+http://localhost:4200
+```
 
-For more information on using the Angular CLI, including detailed command references, visit the [Angular CLI Overview and Command Reference](https://angular.dev/tools/cli) page.
+The Angular app uses `src/app/core/config/api.config.ts` to point relative API requests to `http://localhost:4000/api`.
+
+## Available Scripts
+
+```bash
+npm start
+```
+
+Runs the Angular development server.
+
+```bash
+npm run build
+```
+
+Builds the browser and server bundles into `dist/shotplan`.
+
+```bash
+npm run api
+```
+
+Runs the compiled Express/SSR server from `dist/shotplan/server/server.mjs`.
+
+```bash
+npm test
+```
+
+Runs the test suite.
+
+```bash
+npm run watch
+```
+
+Builds continuously in development mode.
+
+## Local Data
+
+The local backend reads and writes [db.json](./db.json). The Express routes expose these collections:
+
+- `/api/sessions`
+- `/api/clients`
+- `/api/leads`
+- `/api/locations`
+- `/api/packages`
+
+Supported methods are `GET`, `POST`, `PATCH`, and `DELETE`.
+
+## Learning Plan
+
+The tutorial roadmap lives in [LEARNING-PLAN.md](./LEARNING-PLAN.md). It moves from modern Angular fundamentals through signals, components, routing, forms, Material UI, HTTP, and finally a real Node.js backend.
