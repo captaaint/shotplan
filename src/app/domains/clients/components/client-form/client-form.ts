@@ -51,4 +51,12 @@ export class ClientForm {
 
     this.save.emit(this.form.getRawValue());
   }
+
+  isDirty(): boolean {
+    return this.form.dirty;
+  }
+
+  markSaved(): void {
+    this.form.markAsPristine();
+  }
 }

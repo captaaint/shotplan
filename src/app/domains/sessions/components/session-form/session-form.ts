@@ -102,6 +102,14 @@ export class SessionForm {
     });
   }
 
+  isDirty(): boolean {
+    return this.form.dirty;
+  }
+
+  markSaved(): void {
+    this.form.markAsPristine();
+  }
+
   private createShotControl(value = ''): FormControl<string> {
     return this.fb.nonNullable.control(value, Validators.required);
   }

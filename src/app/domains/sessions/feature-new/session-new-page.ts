@@ -1,6 +1,7 @@
-import { Component, inject, signal } from '@angular/core';
+import { Component, inject, signal, viewChild } from '@angular/core';
 import { Router, RouterLink } from '@angular/router';
 
+import { HasUnsavedChanges } from '../../../core/guards/unsaved-changes.guard';
 import { ErrorState } from '../../../shared/ui/error-state/error-state';
 import { LoadingState } from '../../../shared/ui/loading-state/loading-state';
 import { PageHeader } from '../../../shared/ui/page-header/page-header';
@@ -15,11 +16,12 @@ import { SessionStore } from '../data-access/session.store';
   templateUrl: './session-new-page.html',
   styleUrl: './session-new-page.scss',
 })
-export class SessionNewPage {
+export class SessionNewPage implements HasUnsavedChanges {
   private readonly router = inject(Router);
   protected readonly clientStore = inject(ClientStore);
   protected readonly sessionStore = inject(SessionStore);
 
+  private readonly sessionForm = viewChild(SessionForm);
   protected readonly submitting = signal(false);
 
   protected createSession(session: CreateSessionRequest): void {
@@ -28,11 +30,16 @@ export class SessionNewPage {
     this.sessionStore.createSession(session).subscribe({
       next: (createdSession) => {
         this.submitting.set(false);
+        this.sessionForm()?.markSaved();
         void this.router.navigate(['/sessions', createdSession.id]);
       },
       error: () => {
         this.submitting.set(false);
       },
     });
+  }
+
+  hasUnsavedChanges(): boolean {
+    return this.sessionForm()?.isDirty() ?? false;
   }
 }

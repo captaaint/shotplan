@@ -1,6 +1,7 @@
-import { Component, inject, signal } from '@angular/core';
+import { Component, inject, signal, viewChild } from '@angular/core';
 import { Router, RouterLink } from '@angular/router';
 
+import { HasUnsavedChanges } from '../../../core/guards/unsaved-changes.guard';
 import { PageHeader } from '../../../shared/ui/page-header/page-header';
 import { ClientForm } from '../components/client-form/client-form';
 import { CreateClientRequest } from '../data-access/client.models';
@@ -12,10 +13,11 @@ import { ClientStore } from '../data-access/client.store';
   templateUrl: './client-new-page.html',
   styleUrl: './client-new-page.scss',
 })
-export class ClientNewPage {
+export class ClientNewPage implements HasUnsavedChanges {
   private readonly router = inject(Router);
   protected readonly clientStore = inject(ClientStore);
 
+  private readonly clientForm = viewChild(ClientForm);
   protected readonly submitting = signal(false);
 
   protected createClient(client: CreateClientRequest): void {
@@ -24,11 +26,16 @@ export class ClientNewPage {
     this.clientStore.createClient(client).subscribe({
       next: () => {
         this.submitting.set(false);
+        this.clientForm()?.markSaved();
         void this.router.navigateByUrl('/clients');
       },
       error: () => {
         this.submitting.set(false);
       },
     });
+  }
+
+  hasUnsavedChanges(): boolean {
+    return this.clientForm()?.isDirty() ?? false;
   }
 }

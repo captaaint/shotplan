@@ -1,6 +1,7 @@
-import { Component, computed, effect, inject, input, signal } from '@angular/core';
+import { Component, computed, effect, inject, input, signal, viewChild } from '@angular/core';
 import { Router, RouterLink } from '@angular/router';
 
+import { HasUnsavedChanges } from '../../../core/guards/unsaved-changes.guard';
 import { EmptyState } from '../../../shared/ui/empty-state/empty-state';
 import { ErrorState } from '../../../shared/ui/error-state/error-state';
 import { LoadingState } from '../../../shared/ui/loading-state/loading-state';
@@ -16,13 +17,14 @@ import { SessionStore } from '../data-access/session.store';
   templateUrl: './session-edit-page.html',
   styleUrl: './session-edit-page.scss',
 })
-export class SessionEditPage {
+export class SessionEditPage implements HasUnsavedChanges {
   readonly id = input.required<string>();
 
   private readonly router = inject(Router);
   protected readonly clientStore = inject(ClientStore);
   protected readonly sessionStore = inject(SessionStore);
 
+  private readonly sessionForm = viewChild(SessionForm);
   protected readonly submitting = signal(false);
   protected readonly session = computed(() => this.sessionStore.sessionById(this.id()));
 
@@ -36,6 +38,7 @@ export class SessionEditPage {
     this.sessionStore.updateSession(this.id(), session).subscribe({
       next: (updatedSession) => {
         this.submitting.set(false);
+        this.sessionForm()?.markSaved();
         void this.router.navigate(['/sessions', updatedSession.id]);
       },
       error: () => {
@@ -47,5 +50,9 @@ export class SessionEditPage {
   protected retryLoad(): void {
     this.sessionStore.loadSession(this.id()).subscribe();
     this.clientStore.loadClients();
+  }
+
+  hasUnsavedChanges(): boolean {
+    return this.sessionForm()?.isDirty() ?? false;
   }
 }

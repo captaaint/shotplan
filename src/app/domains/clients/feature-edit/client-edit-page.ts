@@ -1,6 +1,7 @@
-import { Component, computed, effect, inject, input, signal } from '@angular/core';
+import { Component, computed, effect, inject, input, signal, viewChild } from '@angular/core';
 import { Router, RouterLink } from '@angular/router';
 
+import { HasUnsavedChanges } from '../../../core/guards/unsaved-changes.guard';
 import { EmptyState } from '../../../shared/ui/empty-state/empty-state';
 import { ErrorState } from '../../../shared/ui/error-state/error-state';
 import { LoadingState } from '../../../shared/ui/loading-state/loading-state';
@@ -15,12 +16,13 @@ import { ClientStore } from '../data-access/client.store';
   templateUrl: './client-edit-page.html',
   styleUrl: './client-edit-page.scss',
 })
-export class ClientEditPage {
+export class ClientEditPage implements HasUnsavedChanges {
   readonly id = input.required<string>();
 
   private readonly router = inject(Router);
   protected readonly clientStore = inject(ClientStore);
 
+  private readonly clientForm = viewChild(ClientForm);
   protected readonly submitting = signal(false);
   protected readonly client = computed(() => this.clientStore.clientById(this.id()));
 
@@ -34,6 +36,7 @@ export class ClientEditPage {
     this.clientStore.updateClient(this.id(), client).subscribe({
       next: () => {
         this.submitting.set(false);
+        this.clientForm()?.markSaved();
         void this.router.navigateByUrl('/clients');
       },
       error: () => {
@@ -44,5 +47,9 @@ export class ClientEditPage {
 
   protected retryLoad(): void {
     this.clientStore.loadClient(this.id()).subscribe();
+  }
+
+  hasUnsavedChanges(): boolean {
+    return this.clientForm()?.isDirty() ?? false;
   }
 }
