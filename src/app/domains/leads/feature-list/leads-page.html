@@ -2,13 +2,36 @@
   <a page-actions class="primary-link" routerLink="/leads/new">New lead</a>
 </app-page-header>
 
+<section class="filter-panel" aria-label="Lead filters">
+  <label>
+    <span>Status</span>
+    <select #statusSelect [value]="statusFilter()" (change)="setStatusFilter(statusSelect.value)">
+      <option value="all">All statuses</option>
+      <option value="new">New</option>
+      <option value="contacted">Contacted</option>
+      <option value="converted">Converted</option>
+    </select>
+  </label>
+
+  <label>
+    <span>Type</span>
+    <select #typeSelect [value]="typeFilter()" (change)="setTypeFilter(typeSelect.value)">
+      <option value="all">All types</option>
+      <option value="Branding">Branding</option>
+      <option value="Family">Family</option>
+      <option value="Portrait">Portrait</option>
+      <option value="Engagement">Engagement</option>
+    </select>
+  </label>
+</section>
+
 @if (leadStore.loading()) {
   <app-loading-state message="Loading leads"></app-loading-state>
 } @else if (leadStore.error(); as error) {
   <app-error-state [message]="error" (retry)="leadStore.loadLeads()"></app-error-state>
-} @else if (leadStore.leads().length) {
+} @else if (filteredLeads().length) {
   <div class="table-panel">
-    <table mat-table [dataSource]="leadStore.leads()">
+    <table mat-table [dataSource]="filteredLeads()">
       <ng-container matColumnDef="fullName">
         <th mat-header-cell *matHeaderCellDef>Name</th>
         <td mat-cell *matCellDef="let lead">{{ lead.fullName }}</td>
@@ -44,7 +67,7 @@
   </div>
 } @else {
   <app-empty-state
-    title="No leads yet"
-    message="Create the first lead from a new inquiry."
+    title="No leads match your filters"
+    message="Clear the filters or create a new lead."
   ></app-empty-state>
 }

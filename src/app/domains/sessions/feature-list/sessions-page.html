@@ -18,6 +18,31 @@
 
 <app-search-box [(value)]="sessionStore.query"></app-search-box>
 
+<section class="filter-panel" aria-label="Session filters">
+  <label>
+    <span>Status</span>
+    <select #statusSelect [value]="statusFilter()" (change)="setStatusFilter(statusSelect.value)">
+      <option value="all">All statuses</option>
+      <option value="inquiry">Inquiry</option>
+      <option value="booked">Booked</option>
+      <option value="done">Done</option>
+    </select>
+  </label>
+
+  <label>
+    <span>Type</span>
+    <select #typeSelect [value]="typeFilter()" (change)="setTypeFilter(typeSelect.value)">
+      <option value="all">All types</option>
+      <option value="Portrait">Portrait</option>
+      <option value="Engagement">Engagement</option>
+      <option value="Family">Family</option>
+      <option value="Headshots">Headshots</option>
+      <option value="Branding">Branding</option>
+      <option value="Mini Session">Mini Session</option>
+    </select>
+  </label>
+</section>
+
 @if (sessionStore.loading()) {
   <app-loading-state message="Loading sessions"></app-loading-state>
 } @else if (sessionStore.error(); as error) {

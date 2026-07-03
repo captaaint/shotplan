@@ -4,10 +4,36 @@
   <article>
     <span class="stat-label">Upcoming sessions</span>
     <strong>{{ sessionStore.upcomingCount() }}</strong>
+    <a [routerLink]="['/sessions']" [queryParams]="{ status: 'booked' }">View booked</a>
   </article>
 
   <article>
     <span class="stat-label">Booked revenue</span>
     <strong>{{ sessionStore.bookedRevenue() | currency: 'USD' : 'symbol' : '1.0-0' }}</strong>
+    <span class="detail">{{ bookedSessionsCount() }} booked sessions</span>
+  </article>
+
+  <article>
+    <span class="stat-label">Open leads</span>
+    <strong>{{ openLeadsCount() }}</strong>
+    <a [routerLink]="['/leads']" [queryParams]="{ status: 'new' }">View new leads</a>
+  </article>
+
+  <article>
+    <span class="stat-label">Follow-ups due</span>
+    <strong>{{ followUpsDueCount() }}</strong>
+    <a [routerLink]="['/leads']" [queryParams]="{ status: 'contacted' }">View contacted</a>
+  </article>
+
+  <article>
+    <span class="stat-label">Locations</span>
+    <strong>{{ locationStore.locations().length }}</strong>
+    <a routerLink="/locations">Manage locations</a>
+  </article>
+
+  <article>
+    <span class="stat-label">Packages</span>
+    <strong>{{ packageStore.packages().length }}</strong>
+    <a routerLink="/packages">Manage packages</a>
   </article>
 </section>

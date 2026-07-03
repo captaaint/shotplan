@@ -1,11 +1,11 @@
 import { CurrencyPipe, DatePipe } from '@angular/common';
-import { Component, computed, inject, signal } from '@angular/core';
+import { Component, computed, inject, input, signal } from '@angular/core';
 import { MatButtonModule } from '@angular/material/button';
 import { MatDialogModule } from '@angular/material/dialog';
 import { MatIconModule } from '@angular/material/icon';
 import { MatTableModule } from '@angular/material/table';
 import { MatSortModule, Sort } from '@angular/material/sort';
-import { RouterLink } from '@angular/router';
+import { Router, RouterLink } from '@angular/router';
 
 import { ConfirmationService } from '../../../core/services/confirmation.service';
 import { NotificationService } from '../../../core/services/notification.service';
@@ -40,7 +40,10 @@ import { Session } from '../data-access/session.models';
 export class SessionsPage {
   private readonly confirmationService = inject(ConfirmationService);
   private readonly notificationService = inject(NotificationService);
+  private readonly router = inject(Router);
   protected readonly sessionStore = inject(SessionStore);
+  readonly status = input<string | undefined>();
+  readonly type = input<string | undefined>();
   protected readonly displayedColumns = [
     'clientName',
     'type',
@@ -50,10 +53,12 @@ export class SessionsPage {
     'actions',
   ];
   protected readonly sort = signal<Sort>({ active: 'date', direction: 'asc' });
+  protected readonly statusFilter = computed(() => this.status() ?? 'all');
+  protected readonly typeFilter = computed(() => this.type() ?? 'all');
 
   protected readonly sortedSessions = computed(() => {
     const sort = this.sort();
-    const sessions = [...this.sessionStore.filteredSessions()];
+    const sessions = this.filterSessions(this.sessionStore.filteredSessions());
 
     if (!sort.direction) {
       return sessions;
@@ -68,6 +73,20 @@ export class SessionsPage {
 
   protected sortSessions(sort: Sort): void {
     this.sort.set(sort);
+  }
+
+  protected setStatusFilter(status: string): void {
+    void this.router.navigate([], {
+      queryParams: { status: status === 'all' ? null : status },
+      queryParamsHandling: 'merge',
+    });
+  }
+
+  protected setTypeFilter(type: string): void {
+    void this.router.navigate([], {
+      queryParams: { type: type === 'all' ? null : type },
+      queryParamsHandling: 'merge',
+    });
   }
 
   protected addTestSession(): void {
@@ -118,5 +137,17 @@ export class SessionsPage {
       default:
         return 0;
     }
+  }
+
+  private filterSessions(sessions: Session[]): Session[] {
+    const status = this.statusFilter();
+    const type = this.typeFilter().toLowerCase();
+
+    return sessions.filter((session) => {
+      const matchesStatus = status === 'all' || session.status === status;
+      const matchesType = type === 'all' || session.type.toLowerCase() === type;
+
+      return matchesStatus && matchesType;
+    });
   }
 }
