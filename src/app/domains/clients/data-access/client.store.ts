@@ -35,7 +35,7 @@ export class ClientStore {
       },
       error: () => {
         this.loadingSignal.set(false);
-        this.errorSignal.set('Could not load clients. Check that the mock API is running.');
+        this.errorSignal.set('Could not load clients. Check that the API server is reachable.');
       },
     });
   }
@@ -52,7 +52,9 @@ export class ClientStore {
         },
         error: () => {
           this.loadingSignal.set(false);
-          this.errorSignal.set('Could not load this client. Check that the mock API is running.');
+          this.errorSignal.set(
+            'Could not load this client. Check that the API server is reachable.',
+          );
         },
       }),
     );

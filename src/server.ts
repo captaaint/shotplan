@@ -7,6 +7,8 @@ import {
 import { readFile, writeFile } from 'node:fs/promises';
 import { join } from 'node:path';
 
+import databaseSeed from '../db.json';
+
 const isNetlifyRuntime = process.env['NETLIFY'] === 'true';
 
 const angularAppEngine = new AngularAppEngine({
@@ -26,6 +28,7 @@ const corsHeaders = {
   'Access-Control-Allow-Headers': 'Content-Type',
   'Access-Control-Allow-Methods': 'GET,POST,PATCH,DELETE,OPTIONS',
 };
+let netlifyDatabase: Database | undefined;
 
 export async function netlifyAppEngineHandler(request: Request): Promise<Response> {
   const apiResponse = await handleApiRequest(request);
@@ -147,13 +150,29 @@ async function deleteEntity(collectionName: CollectionName, id?: string): Promis
 }
 
 async function readDatabase(): Promise<Database> {
+  if (isNetlifyRuntime) {
+    netlifyDatabase ??= cloneDatabase(databaseSeed as Database);
+
+    return netlifyDatabase;
+  }
+
   const rawDatabase = await readFile(dbPath, 'utf-8');
 
   return JSON.parse(rawDatabase) as Database;
 }
 
 async function writeDatabase(database: Database): Promise<void> {
+  if (isNetlifyRuntime) {
+    netlifyDatabase = cloneDatabase(database);
+
+    return;
+  }
+
   await writeFile(dbPath, `${JSON.stringify(database, null, 2)}\n`);
+}
+
+function cloneDatabase(database: Database): Database {
+  return JSON.parse(JSON.stringify(database)) as Database;
 }
 
 function isCollectionName(value: string | undefined): value is CollectionName {

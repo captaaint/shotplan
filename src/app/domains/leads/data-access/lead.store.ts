@@ -35,7 +35,7 @@ export class LeadStore {
       },
       error: () => {
         this.loadingSignal.set(false);
-        this.errorSignal.set('Could not load leads. Check that the mock API is running.');
+        this.errorSignal.set('Could not load leads. Check that the API server is reachable.');
       },
     });
   }
