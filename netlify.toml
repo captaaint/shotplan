@@ -1,3 +1,9 @@
 [build]
   command = "npm run build"
   publish = "dist/shotplan/browser"
+
+[build.environment]
+  NODE_VERSION = "22.22.0"
+
+[[plugins]]
+  package = "@netlify/angular-runtime"
