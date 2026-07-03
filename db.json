@@ -49,19 +49,25 @@
       "id": "c-101",
       "fullName": "Anna Kovacs",
       "email": "anna@example.com",
-      "phone": "+36 20 111 1111"
+      "phone": "+36 20 111 1111",
+      "instagramHandle": "@annakovacs",
+      "notes": "Prefers weekday portrait sessions."
     },
     {
       "id": "c-102",
       "fullName": "Mark Turner",
       "email": "mark@example.com",
-      "phone": "+36 20 222 2222"
+      "phone": "+36 20 222 2222",
+      "instagramHandle": "@markturner",
+      "notes": "Interested in an outdoor engagement session."
     },
     {
       "id": "c-103",
       "fullName": "Elena Morris",
       "email": "elena@example.com",
-      "phone": "+36 20 333 3333"
+      "phone": "+36 20 333 3333",
+      "instagramHandle": "@elenamorris",
+      "notes": "Family shoot with two children."
     }
   ]
 }

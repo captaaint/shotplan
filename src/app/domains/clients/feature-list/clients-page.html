@@ -1,6 +1,42 @@
-<app-page-header title="Clients" subtitle="Client management is coming next"></app-page-header>
+<app-page-header title="Clients" subtitle="Manage people you shoot with">
+  <a page-actions class="primary-action" routerLink="/clients/new">New client</a>
+</app-page-header>
 
-<section class="stub-panel">
-  <h2>Clients domain</h2>
-  <p>This route is ready for the upcoming clients workflow.</p>
-</section>
+@if (clientStore.loading()) {
+  <app-loading-state message="Loading clients"></app-loading-state>
+} @else if (clientStore.error(); as error) {
+  <app-error-state [message]="error" (retry)="clientStore.loadClients()"></app-error-state>
+} @else {
+  <ul class="client-list">
+    @for (client of clientStore.clients(); track client.id) {
+      <li class="client-card">
+        <div>
+          <h2>{{ client.fullName }}</h2>
+          <p>{{ client.email }}</p>
+        </div>
+
+        <dl>
+          <div>
+            <dt>Phone</dt>
+            <dd>{{ client.phone }}</dd>
+          </div>
+          <div>
+            <dt>Instagram</dt>
+            <dd>{{ client.instagramHandle || 'Not provided' }}</dd>
+          </div>
+        </dl>
+
+        @if (client.notes) {
+          <p class="notes">{{ client.notes }}</p>
+        }
+      </li>
+    } @empty {
+      <li>
+        <app-empty-state
+          title="No clients yet"
+          message="Create your first client to start building the contact list."
+        ></app-empty-state>
+      </li>
+    }
+  </ul>
+}
