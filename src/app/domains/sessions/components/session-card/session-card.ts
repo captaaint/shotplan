@@ -1,5 +1,5 @@
 import { CurrencyPipe, DatePipe } from '@angular/common';
-import { Component, input } from '@angular/core';
+import { Component, input, output } from '@angular/core';
 import { Session } from '../../../../session.model';
 
 @Component({
@@ -11,4 +11,15 @@ import { Session } from '../../../../session.model';
 export class SessionCard {
   readonly session = input.required<Session>();
   readonly selected = input(false);
+  readonly select = output<string>();
+  readonly markDone = output<string>();
+
+  protected selectSession(): void {
+    this.select.emit(this.session().id);
+  }
+
+  protected markSessionDone(event: Event): void {
+    event.stopPropagation();
+    this.markDone.emit(this.session().id);
+  }
 }

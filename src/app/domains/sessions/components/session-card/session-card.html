@@ -1,4 +1,8 @@
-<article class="session-row" [class.session-row-selected]="selected()">
+<article
+  class="session-row"
+  [class.session-row-selected]="selected()"
+  (click)="selectSession()"
+>
   <div class="session-main">
     <strong>{{ session().clientName }}</strong>
     <span>{{ session().type }}</span>
@@ -17,5 +21,11 @@
 
   @if (session().galleryUrl) {
     <a class="gallery-link" [href]="session().galleryUrl">Gallery</a>
+  }
+
+  @if (session().status !== 'done') {
+    <button type="button" class="mark-done-action" (click)="markSessionDone($event)">
+      Mark done
+    </button>
   }
 </article>

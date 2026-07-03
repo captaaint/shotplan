@@ -20,13 +20,12 @@
 
 <ul class="session-list">
   @for (session of sessions(); track session.id) {
-    <li
-      class="session-list-item"
-      (click)="selectSession(session.id)"
-    >
+    <li class="session-list-item">
       <app-session-card
         [session]="session"
         [selected]="selectedSessionId() === session.id"
+        (select)="selectSession($event)"
+        (markDone)="markSessionDone($event)"
       ></app-session-card>
     </li>
   } @empty {
@@ -61,8 +60,5 @@
       <a class="gallery-link" [href]="session.galleryUrl">Open gallery</a>
     }
 
-    @if (session.status !== 'done') {
-      <button type="button" class="secondary-action" (click)="markSelectedDone()">Mark done</button>
-    }
   </section>
 }

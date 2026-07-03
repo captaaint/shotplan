@@ -71,3 +71,18 @@
 .gallery-link:hover {
   text-decoration: underline;
 }
+
+.mark-done-action {
+  border: 0;
+  border-radius: 0.5rem;
+  cursor: pointer;
+  padding: 0.5rem 0.75rem;
+  background: #e0f2fe;
+  color: #075985;
+  font: inherit;
+  font-weight: 700;
+}
+
+.mark-done-action:hover {
+  filter: brightness(0.96);
+}

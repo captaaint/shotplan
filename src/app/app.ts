@@ -89,16 +89,10 @@ export class App {
     this.selectedSessionId.set(sessionId);
   }
 
-  protected markSelectedDone(): void {
-    const selectedId = this.selectedSessionId();
-
-    if (!selectedId) {
-      return;
-    }
-
+  protected markSessionDone(sessionId: string): void {
     this.sessions.update((sessions) =>
       sessions.map((session) =>
-        session.id === selectedId ? { ...session, status: 'done' } : session,
+        session.id === sessionId ? { ...session, status: 'done' } : session,
       ),
     );
   }
