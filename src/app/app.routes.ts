@@ -1,8 +1,6 @@
 import { Routes } from '@angular/router';
 import { Shell } from './core/layout/shell';
 import { Dashboard } from './domains/dashboard/dashboard';
-import { SessionDetailPage } from './domains/sessions/feature-detail/session-detail-page';
-import { SessionsPage } from './domains/sessions/feature-list/sessions-page';
 
 export const routes: Routes = [
   {
@@ -20,11 +18,13 @@ export const routes: Routes = [
       },
       {
         path: 'sessions',
-        component: SessionsPage,
+        loadChildren: () =>
+          import('./domains/sessions/sessions.routes').then((m) => m.SESSIONS_ROUTES),
       },
       {
-        path: 'sessions/:id',
-        component: SessionDetailPage,
+        path: 'clients',
+        loadChildren: () =>
+          import('./domains/clients/clients.routes').then((m) => m.CLIENTS_ROUTES),
       },
     ],
   },
