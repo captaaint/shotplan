@@ -2,7 +2,7 @@
 
 ShotPlan is an Angular learning project for building a small photography planning app. It is split into modules and phases in [LEARNING-PLAN.md](./LEARNING-PLAN.md), with each phase adding a real piece of application architecture.
 
-The app currently includes dashboards and CRUD-style domain screens for sessions, clients, leads, locations, and packages. Data is served by a local Express API backed by `db.json`.
+The app currently includes dashboards and CRUD-style domain screens for sessions, clients, leads, locations, and packages. Data is served through Angular SSR API routes backed by `db.json`.
 
 ## Tech Stack
 
@@ -12,7 +12,7 @@ The app currently includes dashboards and CRUD-style domain screens for sessions
 - Angular Router with lazy domain routes
 - Reactive forms
 - Angular SSR
-- Express
+- Netlify Angular Runtime
 - Vitest
 - Prettier
 
@@ -35,29 +35,9 @@ Install dependencies:
 npm install
 ```
 
-Build the app:
+Start the local development server:
 
 ```bash
-npm run build
-```
-
-Start the local API and SSR server:
-
-```bash
-npm run api
-```
-
-The built app and API run at:
-
-```text
-http://localhost:4000
-http://localhost:4000/api
-```
-
-For day-to-day Angular development, run the API server in one terminal and the Angular dev server in another:
-
-```bash
-npm run api
 npm start
 ```
 
@@ -67,7 +47,25 @@ Then open:
 http://localhost:4200
 ```
 
-The Angular app uses `src/app/core/config/api.config.ts` to point relative API requests to `http://localhost:4000/api`.
+Build the app:
+
+```bash
+npm run build
+```
+
+The Netlify publish directory is configured in `netlify.toml`:
+
+```text
+dist/shotplan/browser
+```
+
+API requests are routed under:
+
+```text
+/api
+```
+
+The Angular app uses `src/app/core/config/api.config.ts` to point relative API requests to `/api`.
 
 ## Available Scripts
 
@@ -84,12 +82,6 @@ npm run build
 Builds the browser and server bundles into `dist/shotplan`.
 
 ```bash
-npm run api
-```
-
-Runs the compiled Express/SSR server from `dist/shotplan/server/server.mjs`.
-
-```bash
 npm test
 ```
 
@@ -103,7 +95,7 @@ Builds continuously in development mode.
 
 ## Local Data
 
-The local backend reads and writes [db.json](./db.json). The Express routes expose these collections:
+The backend handler reads and writes [db.json](./db.json). The API routes expose these collections:
 
 - `/api/sessions`
 - `/api/clients`

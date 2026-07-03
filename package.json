@@ -5,10 +5,8 @@
     "ng": "ng",
     "start": "ng serve",
     "build": "ng build",
-    "api": "node dist/shotplan/server/server.mjs",
     "watch": "ng build --watch --configuration development",
-    "test": "ng test",
-    "serve:ssr:shotplan": "node dist/shotplan/server/server.mjs"
+    "test": "ng test"
   },
   "private": true,
   "packageManager": "npm@11.8.0",
@@ -24,7 +22,6 @@
     "@angular/platform-server": "^21.2.0",
     "@angular/router": "^21.2.0",
     "@angular/ssr": "^21.2.18",
-    "express": "^5.1.0",
     "rxjs": "~7.8.0",
     "tslib": "^2.3.0"
   },
@@ -33,7 +30,6 @@
     "@angular/cli": "^21.2.18",
     "@angular/compiler-cli": "^21.2.0",
     "@netlify/angular-runtime": "^4.0.0",
-    "@types/express": "^5.0.1",
     "@types/node": "^20.17.19",
     "jsdom": "^28.0.0",
     "prettier": "^3.8.1",
