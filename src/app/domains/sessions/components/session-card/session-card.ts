@@ -19,7 +19,12 @@ export class SessionCard {
   }
 
   protected markSessionDone(event: Event): void {
+    event.preventDefault();
     event.stopPropagation();
     this.markDone.emit(this.session().id);
+  }
+
+  protected stopNavigation(event: Event): void {
+    event.stopPropagation();
   }
 }

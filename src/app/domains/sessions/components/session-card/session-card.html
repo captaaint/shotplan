@@ -20,7 +20,9 @@
   </span>
 
   @if (session().galleryUrl) {
-    <a class="gallery-link" [href]="session().galleryUrl">Gallery</a>
+    <a class="gallery-link" [href]="session().galleryUrl" (click)="stopNavigation($event)">
+      Gallery
+    </a>
   }
 
   @if (session().status !== 'done') {

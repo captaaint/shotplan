@@ -84,6 +84,10 @@ export class SessionStore {
     );
   });
 
+  sessionById(sessionId: string): Session | null {
+    return this.sessionsSignal().find((session) => session.id === sessionId) ?? null;
+  }
+
   selectSession(sessionId: string): void {
     this.selectedSessionIdSignal.set(sessionId);
   }

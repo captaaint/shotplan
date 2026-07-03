@@ -21,6 +21,8 @@
   @for (session of sessionStore.filteredSessions(); track session.id) {
     <li class="session-list-item">
       <app-session-card
+        class="session-card-link"
+        [routerLink]="['/sessions', session.id]"
         [session]="session"
         [selected]="sessionStore.selectedSessionId() === session.id"
         (select)="sessionStore.selectSession($event)"
@@ -36,32 +38,3 @@
     </li>
   }
 </ul>
-
-@if (sessionStore.selectedSession(); as session) {
-  <section class="detail-panel" aria-label="Selected session details">
-    <p class="detail-kicker">Selected session</p>
-    <h3>{{ session.clientName }}</h3>
-    <dl>
-      <div>
-        <dt>Type</dt>
-        <dd>{{ session.type }}</dd>
-      </div>
-      <div>
-        <dt>Date</dt>
-        <dd>{{ session.date | date: 'fullDate' }}</dd>
-      </div>
-      <div>
-        <dt>Status</dt>
-        <dd>{{ session.status }}</dd>
-      </div>
-      <div>
-        <dt>Price</dt>
-        <dd>{{ session.price | currency: 'USD' : 'symbol' : '1.0-0' }}</dd>
-      </div>
-    </dl>
-
-    @if (session.galleryUrl) {
-      <a class="gallery-link" [href]="session.galleryUrl">Open gallery</a>
-    }
-  </section>
-}
