@@ -1,0 +1,9 @@
+<label class="search-box">
+  <span>Search sessions</span>
+  <input
+    type="search"
+    [value]="value()"
+    (input)="value.set($any($event.target).value)"
+    placeholder="Filter by client name"
+  />
+</label>

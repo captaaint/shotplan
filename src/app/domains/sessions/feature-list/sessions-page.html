@@ -1,0 +1,141 @@
+<app-page-header title="Sessions" subtitle="Upcoming sessions">
+  <a page-actions class="primary-link" routerLink="/sessions/new">New session</a>
+  <button page-actions type="button" class="primary-action" (click)="addTestSession()">
+    Add test session
+  </button>
+</app-page-header>
+
+<section class="stats-panel" aria-label="Session stats">
+  <div>
+    <span class="stat-label">Upcoming</span>
+    <strong>{{ sessionStore.upcomingCount() }}</strong>
+  </div>
+  <div>
+    <span class="stat-label">Booked revenue</span>
+    <strong>{{ sessionStore.bookedRevenue() | currency: 'USD' : 'symbol' : '1.0-0' }}</strong>
+  </div>
+</section>
+
+<app-search-box [(value)]="sessionStore.query"></app-search-box>
+
+<section class="filter-panel" aria-label="Session filters">
+  <label>
+    <span>Status</span>
+    <select #statusSelect [value]="statusFilter()" (change)="setStatusFilter(statusSelect.value)">
+      <option value="all">All statuses</option>
+      <option value="inquiry">Inquiry</option>
+      <option value="booked">Booked</option>
+      <option value="done">Done</option>
+    </select>
+  </label>
+
+  <label>
+    <span>Type</span>
+    <select #typeSelect [value]="typeFilter()" (change)="setTypeFilter(typeSelect.value)">
+      <option value="all">All types</option>
+      <option value="Portrait">Portrait</option>
+      <option value="Engagement">Engagement</option>
+      <option value="Family">Family</option>
+      <option value="Headshots">Headshots</option>
+      <option value="Branding">Branding</option>
+      <option value="Mini Session">Mini Session</option>
+    </select>
+  </label>
+</section>
+
+@if (sessionStore.loading()) {
+  <app-loading-state message="Loading sessions"></app-loading-state>
+} @else if (sessionStore.error(); as error) {
+  <app-error-state [message]="error" (retry)="sessionStore.loadSessions()"></app-error-state>
+} @else {
+  @if (sortedSessions().length) {
+    <div class="table-panel">
+      <table
+        mat-table
+        matSort
+        [matSortActive]="sort().active"
+        [matSortDirection]="sort().direction"
+        [dataSource]="sortedSessions()"
+        (matSortChange)="sortSessions($event)"
+      >
+        <ng-container matColumnDef="clientName">
+          <th mat-header-cell *matHeaderCellDef mat-sort-header>Client</th>
+          <td mat-cell *matCellDef="let session">{{ session.clientName }}</td>
+        </ng-container>
+
+        <ng-container matColumnDef="type">
+          <th mat-header-cell *matHeaderCellDef mat-sort-header>Type</th>
+          <td mat-cell *matCellDef="let session">{{ session.type }}</td>
+        </ng-container>
+
+        <ng-container matColumnDef="date">
+          <th mat-header-cell *matHeaderCellDef mat-sort-header>Date</th>
+          <td mat-cell *matCellDef="let session">
+            {{ session.date | date: 'yyyy-MM-dd' }}
+          </td>
+        </ng-container>
+
+        <ng-container matColumnDef="status">
+          <th mat-header-cell *matHeaderCellDef mat-sort-header>Status</th>
+          <td mat-cell *matCellDef="let session">
+            <span class="status-pill" [class.done]="session.status === 'done'">
+              {{ session.status }}
+            </span>
+          </td>
+        </ng-container>
+
+        <ng-container matColumnDef="price">
+          <th mat-header-cell *matHeaderCellDef mat-sort-header>Price</th>
+          <td mat-cell *matCellDef="let session">
+            {{ session.price | currency: 'USD' : 'symbol' : '1.0-0' }}
+          </td>
+        </ng-container>
+
+        <ng-container matColumnDef="actions">
+          <th mat-header-cell *matHeaderCellDef>Actions</th>
+          <td mat-cell *matCellDef="let session">
+            <div class="row-actions">
+              <a mat-icon-button [routerLink]="['/sessions', session.id]" aria-label="View session">
+                <mat-icon>visibility</mat-icon>
+              </a>
+              <a
+                mat-icon-button
+                [routerLink]="['/sessions', session.id, 'edit']"
+                aria-label="Edit session"
+              >
+                <mat-icon>edit</mat-icon>
+              </a>
+              @if (session.status !== 'done') {
+                <button
+                  type="button"
+                  mat-icon-button
+                  aria-label="Mark session done"
+                  (click)="markSessionDone(session)"
+                >
+                  <mat-icon>check_circle</mat-icon>
+                </button>
+              }
+              <button
+                type="button"
+                mat-icon-button
+                class="danger-action"
+                aria-label="Delete session"
+                (click)="deleteSession(session)"
+              >
+                <mat-icon>delete</mat-icon>
+              </button>
+            </div>
+          </td>
+        </ng-container>
+
+        <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+        <tr mat-row *matRowDef="let row; columns: displayedColumns"></tr>
+      </table>
+    </div>
+  } @else {
+    <app-empty-state
+      title="No sessions match your search"
+      message="Clear the search box to return to the full session list."
+    ></app-empty-state>
+  }
+}

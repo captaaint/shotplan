@@ -1,0 +1,95 @@
+:host {
+  display: block;
+  min-height: 100vh;
+  color: #1f2937;
+}
+
+.shell {
+  min-height: 100vh;
+  background: #f6f5f2;
+}
+
+.sidenav {
+  width: 16rem;
+  border-right: 1px solid #ddd6cc;
+  background: #fffcf6;
+}
+
+.brand {
+  display: flex;
+  align-items: center;
+  gap: 0.7rem;
+  color: #111827;
+  font-size: 1.25rem;
+  font-weight: 800;
+  padding: 1.2rem 1rem;
+  text-decoration: none;
+}
+
+.brand-mark {
+  display: inline-grid;
+  place-items: center;
+  width: 2rem;
+  height: 2rem;
+  border-radius: 50%;
+  background: #2f2a24;
+  color: #f9f1df;
+  font-size: 1rem;
+}
+
+.topbar {
+  position: sticky;
+  top: 0;
+  z-index: 2;
+  border-bottom: 1px solid #ddd6cc;
+  background: #fffaf0;
+  color: #2f2a24;
+}
+
+.menu-button {
+  display: none;
+  margin-right: 0.5rem;
+}
+
+.toolbar-spacer {
+  flex: 1 1 auto;
+}
+
+.toolbar-kicker {
+  color: #74685c;
+  font-size: 0.85rem;
+  font-weight: 600;
+}
+
+.active-link {
+  --mdc-list-list-item-label-text-color: #2f2a24;
+  --mdc-list-list-item-leading-icon-color: #2f2a24;
+  background: #eee3d4;
+}
+
+.content {
+  min-width: 0;
+  padding: 2rem;
+}
+
+@media (max-width: 48rem) {
+  .sidenav {
+    width: 15rem;
+  }
+
+  .shell .sidenav {
+    position: fixed;
+  }
+
+  .menu-button {
+    display: inline-flex;
+  }
+
+  .content {
+    padding: 1rem;
+  }
+
+  .toolbar-kicker {
+    display: none;
+  }
+}

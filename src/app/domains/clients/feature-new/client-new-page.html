@@ -1,0 +1,13 @@
+<app-page-header title="New client" subtitle="Create a contact for future sessions">
+  <a page-actions class="back-link" routerLink="/clients">Back to clients</a>
+</app-page-header>
+
+@if (clientStore.error(); as error) {
+  <p class="form-error" role="alert">{{ error }}</p>
+}
+
+<app-client-form
+  submitLabel="Create client"
+  [saving]="submitting()"
+  (save)="createClient($event)"
+></app-client-form>

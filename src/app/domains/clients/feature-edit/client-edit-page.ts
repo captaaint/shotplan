@@ -1,0 +1,59 @@
+import { Component, computed, effect, inject, input, signal, viewChild } from '@angular/core';
+import { Router, RouterLink } from '@angular/router';
+
+import { HasUnsavedChanges } from '../../../core/guards/unsaved-changes.guard';
+import { NotificationService } from '../../../core/services/notification.service';
+import { EmptyState } from '../../../shared/ui/empty-state/empty-state';
+import { ErrorState } from '../../../shared/ui/error-state/error-state';
+import { LoadingState } from '../../../shared/ui/loading-state/loading-state';
+import { PageHeader } from '../../../shared/ui/page-header/page-header';
+import { ClientForm } from '../components/client-form/client-form';
+import { CreateClientRequest } from '../data-access/client.models';
+import { ClientStore } from '../data-access/client.store';
+
+@Component({
+  selector: 'app-client-edit-page',
+  imports: [ClientForm, EmptyState, ErrorState, LoadingState, PageHeader, RouterLink],
+  templateUrl: './client-edit-page.html',
+  styleUrl: './client-edit-page.scss',
+})
+export class ClientEditPage implements HasUnsavedChanges {
+  readonly id = input.required<string>();
+
+  private readonly router = inject(Router);
+  private readonly notificationService = inject(NotificationService);
+  protected readonly clientStore = inject(ClientStore);
+
+  private readonly clientForm = viewChild(ClientForm);
+  protected readonly submitting = signal(false);
+  protected readonly client = computed(() => this.clientStore.clientById(this.id()));
+
+  private readonly loadClientEffect = effect(() => {
+    this.clientStore.loadClient(this.id()).subscribe();
+  });
+
+  protected updateClient(client: CreateClientRequest): void {
+    this.submitting.set(true);
+
+    this.clientStore.updateClient(this.id(), client).subscribe({
+      next: () => {
+        this.submitting.set(false);
+        this.clientForm()?.markSaved();
+        this.notificationService.success('Client updated.');
+        void this.router.navigateByUrl('/clients');
+      },
+      error: () => {
+        this.submitting.set(false);
+        this.notificationService.error('Could not update the client.');
+      },
+    });
+  }
+
+  protected retryLoad(): void {
+    this.clientStore.loadClient(this.id()).subscribe();
+  }
+
+  hasUnsavedChanges(): boolean {
+    return this.clientForm()?.isDirty() ?? false;
+  }
+}

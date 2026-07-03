@@ -1,0 +1,12 @@
+@if (!errorOnly()) {
+  <label class="form-field" [class.wide-field]="wide()">
+    <span>{{ label() }}</span>
+    <ng-content></ng-content>
+
+    @if (errorMessage(); as message) {
+      <small>{{ message }}</small>
+    }
+  </label>
+} @else if (errorMessage(); as message) {
+  <small class="wide-field">{{ message }}</small>
+}

@@ -1,0 +1,24 @@
+<app-page-header title="Package detail" subtitle="Offer details">
+  <a page-actions class="back-link" routerLink="/packages">Back to packages</a>
+</app-page-header>
+
+@if (packageStore.loading()) {
+  <app-loading-state message="Loading package"></app-loading-state>
+} @else if (packageStore.error(); as error) {
+  <app-error-state
+    [message]="error"
+    (retry)="packageStore.loadPackage(id()).subscribe()"
+  ></app-error-state>
+} @else if (photoPackage(); as package) {
+  <section class="detail-panel">
+    <h1>{{ package.name }}</h1>
+    <p>{{ package.price | currency: 'USD' : 'symbol' : '1.0-0' }}</p>
+    <p>{{ package.durationMinutes }} minutes</p>
+    <p>{{ package.deliverables }}</p>
+  </section>
+} @else {
+  <app-empty-state
+    title="Package not found"
+    message="Return to packages and choose one."
+  ></app-empty-state>
+}

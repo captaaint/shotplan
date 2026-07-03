@@ -1,0 +1,73 @@
+<app-page-header title="Leads" subtitle="New inquiries and conversion pipeline">
+  <a page-actions class="primary-link" routerLink="/leads/new">New lead</a>
+</app-page-header>
+
+<section class="filter-panel" aria-label="Lead filters">
+  <label>
+    <span>Status</span>
+    <select #statusSelect [value]="statusFilter()" (change)="setStatusFilter(statusSelect.value)">
+      <option value="all">All statuses</option>
+      <option value="new">New</option>
+      <option value="contacted">Contacted</option>
+      <option value="converted">Converted</option>
+    </select>
+  </label>
+
+  <label>
+    <span>Type</span>
+    <select #typeSelect [value]="typeFilter()" (change)="setTypeFilter(typeSelect.value)">
+      <option value="all">All types</option>
+      <option value="Branding">Branding</option>
+      <option value="Family">Family</option>
+      <option value="Portrait">Portrait</option>
+      <option value="Engagement">Engagement</option>
+    </select>
+  </label>
+</section>
+
+@if (leadStore.loading()) {
+  <app-loading-state message="Loading leads"></app-loading-state>
+} @else if (leadStore.error(); as error) {
+  <app-error-state [message]="error" (retry)="leadStore.loadLeads()"></app-error-state>
+} @else if (filteredLeads().length) {
+  <div class="table-panel">
+    <table mat-table [dataSource]="filteredLeads()">
+      <ng-container matColumnDef="fullName">
+        <th mat-header-cell *matHeaderCellDef>Name</th>
+        <td mat-cell *matCellDef="let lead">{{ lead.fullName }}</td>
+      </ng-container>
+
+      <ng-container matColumnDef="sessionType">
+        <th mat-header-cell *matHeaderCellDef>Session</th>
+        <td mat-cell *matCellDef="let lead">{{ lead.sessionType }}</td>
+      </ng-container>
+
+      <ng-container matColumnDef="source">
+        <th mat-header-cell *matHeaderCellDef>Source</th>
+        <td mat-cell *matCellDef="let lead">{{ lead.source }}</td>
+      </ng-container>
+
+      <ng-container matColumnDef="status">
+        <th mat-header-cell *matHeaderCellDef>Status</th>
+        <td mat-cell *matCellDef="let lead">{{ lead.status }}</td>
+      </ng-container>
+
+      <ng-container matColumnDef="actions">
+        <th mat-header-cell *matHeaderCellDef>Actions</th>
+        <td mat-cell *matCellDef="let lead">
+          <a mat-icon-button [routerLink]="['/leads', lead.id]" aria-label="View lead">
+            <mat-icon>visibility</mat-icon>
+          </a>
+        </td>
+      </ng-container>
+
+      <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+      <tr mat-row *matRowDef="let row; columns: displayedColumns"></tr>
+    </table>
+  </div>
+} @else {
+  <app-empty-state
+    title="No leads match your filters"
+    message="Clear the filters or create a new lead."
+  ></app-empty-state>
+}

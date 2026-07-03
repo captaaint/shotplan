@@ -1,0 +1,22 @@
+:host {
+  display: contents;
+}
+
+.form-field {
+  display: grid;
+  gap: 0.4rem;
+}
+
+.wide-field {
+  grid-column: 1 / -1;
+}
+
+span {
+  color: #374151;
+  font-weight: 700;
+}
+
+small {
+  color: #b91c1c;
+  font-weight: 700;
+}

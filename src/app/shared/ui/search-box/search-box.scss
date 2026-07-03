@@ -1,0 +1,31 @@
+:host {
+  display: block;
+}
+
+.search-box {
+  display: grid;
+  gap: 0.4rem;
+  max-width: 28rem;
+}
+
+.search-box span {
+  color: #4b5563;
+  font-size: 0.875rem;
+  font-weight: 700;
+}
+
+.search-box input {
+  width: 100%;
+  box-sizing: border-box;
+  border: 1px solid #d1d5db;
+  border-radius: 0.5rem;
+  padding: 0.75rem 0.9rem;
+  color: #1f2937;
+  font: inherit;
+}
+
+.search-box input:focus {
+  border-color: #2563eb;
+  box-shadow: 0 0 0 3px rgba(37, 99, 235, 0.14);
+  outline: none;
+}

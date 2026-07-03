@@ -1,0 +1,50 @@
+<app-page-header title="Lead detail" subtitle="Review and convert inquiry">
+  <a page-actions class="back-link" routerLink="/leads">Back to leads</a>
+</app-page-header>
+
+@if (leadStore.loading()) {
+  <app-loading-state message="Loading lead"></app-loading-state>
+} @else if (leadStore.error(); as error) {
+  <app-error-state
+    [message]="error"
+    (retry)="leadStore.loadLead(id()).subscribe()"
+  ></app-error-state>
+} @else if (lead(); as lead) {
+  <section class="detail-panel">
+    <h1>{{ lead.fullName }}</h1>
+    <dl>
+      <div>
+        <dt>Email</dt>
+        <dd>{{ lead.email }}</dd>
+      </div>
+      <div>
+        <dt>Phone</dt>
+        <dd>{{ lead.phone }}</dd>
+      </div>
+      <div>
+        <dt>Session</dt>
+        <dd>{{ lead.sessionType }}</dd>
+      </div>
+      <div>
+        <dt>Status</dt>
+        <dd>{{ lead.status }}</dd>
+      </div>
+      <div>
+        <dt>Source</dt>
+        <dd>{{ lead.source }}</dd>
+      </div>
+    </dl>
+    <p>{{ lead.notes }}</p>
+
+    @if (!lead.convertedClientId) {
+      <button type="button" mat-flat-button (click)="convertLead()">Convert to client</button>
+    } @else {
+      <p class="converted">Converted client: {{ lead.convertedClientId }}</p>
+    }
+  </section>
+} @else {
+  <app-empty-state
+    title="Lead not found"
+    message="Return to leads and choose an existing lead."
+  ></app-empty-state>
+}

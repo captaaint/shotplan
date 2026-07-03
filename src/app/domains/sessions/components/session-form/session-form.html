@@ -1,0 +1,93 @@
+<form class="session-form" [formGroup]="form" (ngSubmit)="submit()">
+  <app-form-field label="Client" [control]="form.controls.clientId">
+    <select formControlName="clientId">
+      <option value="">Choose a client</option>
+      @for (client of clients(); track client.id) {
+        <option [value]="client.id">{{ client.fullName }}</option>
+      }
+    </select>
+  </app-form-field>
+
+  <app-form-field label="Location" [control]="form.controls.locationId">
+    <select formControlName="locationId">
+      <option value="">Choose a location</option>
+      @for (location of locations(); track location.id) {
+        <option [value]="location.id">{{ location.name }}</option>
+      }
+    </select>
+  </app-form-field>
+
+  <app-form-field label="Package" [control]="form.controls.packageId">
+    <select formControlName="packageId">
+      <option value="">Choose a package</option>
+      @for (packageOption of packages(); track packageOption.id) {
+        <option [value]="packageOption.id">{{ packageOption.name }}</option>
+      }
+    </select>
+  </app-form-field>
+
+  <app-form-field label="Session type" [control]="form.controls.type">
+    <input type="text" formControlName="type" />
+  </app-form-field>
+
+  <app-form-field label="Date" [control]="form.controls.date">
+    <input type="date" formControlName="date" />
+  </app-form-field>
+
+  <app-form-field label="Start time" [control]="form.controls.startTime">
+    <input type="time" formControlName="startTime" />
+  </app-form-field>
+
+  <app-form-field label="End time" [control]="form.controls.endTime">
+    <input type="time" formControlName="endTime" />
+  </app-form-field>
+
+  <app-form-field label="Price" [control]="form.controls.price">
+    <input type="number" formControlName="price" min="0" />
+  </app-form-field>
+
+  <app-form-field label="Status" [control]="form.controls.status">
+    <select formControlName="status">
+      <option value="inquiry">Inquiry</option>
+      <option value="booked">Booked</option>
+      <option value="done">Done</option>
+    </select>
+  </app-form-field>
+
+  <app-form-field label="Gallery URL" [control]="form.controls.galleryUrl">
+    <input type="text" formControlName="galleryUrl" />
+  </app-form-field>
+
+  <app-form-field
+    label="Session time"
+    [control]="form"
+    [wide]="true"
+    [errorOnly]="true"
+  ></app-form-field>
+
+  <fieldset class="wide-field" formArrayName="shotList">
+    <legend>Shot list</legend>
+
+    <div class="shot-list">
+      @for (shot of shotList.controls; track $index) {
+        <div class="shot-row">
+          <app-form-field [label]="'Shot ' + ($index + 1)" [control]="shot">
+            <input type="text" [formControlName]="$index" />
+          </app-form-field>
+
+          <button type="button" class="secondary-action" (click)="removeShot($index)">
+            Remove
+          </button>
+        </div>
+      }
+    </div>
+
+    <button type="button" class="secondary-action add-shot" (click)="addShot()">Add shot</button>
+  </fieldset>
+
+  <div class="form-actions">
+    <button type="submit" [disabled]="form.invalid || saving()">
+      {{ saving() ? 'Saving...' : submitLabel() }}
+    </button>
+  </div>
+</form>

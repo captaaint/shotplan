@@ -1,0 +1,64 @@
+<app-page-header title="Session detail" subtitle="Review the selected shoot">
+  @if (session(); as session) {
+    <a page-actions class="back-link" [routerLink]="['/sessions', session.id, 'edit']">
+      Edit session
+    </a>
+  }
+  <a page-actions class="back-link" routerLink="/sessions">Back to sessions</a>
+</app-page-header>
+
+@if (sessionStore.loading()) {
+  <app-loading-state message="Loading session"></app-loading-state>
+} @else if (sessionStore.error(); as error) {
+  <app-error-state [message]="error" (retry)="sessionStore.loadSessions()"></app-error-state>
+} @else if (session(); as session) {
+  <section class="detail-panel" aria-label="Session details">
+    <p class="detail-kicker">Selected session</p>
+    <h1>{{ session.clientName }}</h1>
+    <dl>
+      <div>
+        <dt>Type</dt>
+        <dd>{{ session.type }}</dd>
+      </div>
+      <div>
+        <dt>Date</dt>
+        <dd>{{ session.date | date: 'fullDate' }}</dd>
+      </div>
+      <div>
+        <dt>Time</dt>
+        <dd>{{ session.startTime }}-{{ session.endTime }}</dd>
+      </div>
+      <div>
+        <dt>Status</dt>
+        <dd>{{ session.status }}</dd>
+      </div>
+      <div>
+        <dt>Price</dt>
+        <dd>{{ session.price | currency: 'USD' : 'symbol' : '1.0-0' }}</dd>
+      </div>
+    </dl>
+
+    @if (session.galleryUrl) {
+      <a class="gallery-link" [href]="session.galleryUrl">Open gallery</a>
+    }
+
+    <section class="shot-list-panel" aria-label="Shot list">
+      <h2>Shot list</h2>
+
+      @if (session.shotList.length) {
+        <ol>
+          @for (shot of session.shotList; track $index) {
+            <li>{{ shot }}</li>
+          }
+        </ol>
+      } @else {
+        <p>No shots planned yet.</p>
+      }
+    </section>
+  </section>
+} @else {
+  <app-empty-state
+    title="Session not found"
+    message="Return to the sessions list and choose an existing session."
+  ></app-empty-state>
+}
