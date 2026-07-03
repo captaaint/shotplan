@@ -1,0 +1,13 @@
+<app-page-header title="Dashboard" subtitle="Your studio at a glance"></app-page-header>
+
+<section class="dashboard-grid" aria-label="Studio stats">
+  <article>
+    <span class="stat-label">Upcoming sessions</span>
+    <strong>{{ sessionStore.upcomingCount() }}</strong>
+  </article>
+
+  <article>
+    <span class="stat-label">Booked revenue</span>
+    <strong>{{ sessionStore.bookedRevenue() | currency: 'USD' : 'symbol' : '1.0-0' }}</strong>
+  </article>
+</section>

@@ -1,14 +1,11 @@
 import { Component, PLATFORM_ID, effect, inject, signal } from '@angular/core';
-import { CurrencyPipe, DatePipe, isPlatformBrowser } from '@angular/common';
+import { isPlatformBrowser } from '@angular/common';
+import { RouterOutlet } from '@angular/router';
 import { SessionStore } from './domains/sessions/data-access/session.store';
-import { SessionCard } from './domains/sessions/components/session-card/session-card';
-import { EmptyState } from './shared/ui/empty-state/empty-state';
-import { PageHeader } from './shared/ui/page-header/page-header';
-import { SearchBox } from './shared/ui/search-box/search-box';
 
 @Component({
   selector: 'app-root',
-  imports: [CurrencyPipe, DatePipe, EmptyState, PageHeader, SearchBox, SessionCard],
+  imports: [RouterOutlet],
   templateUrl: './app.html',
   styleUrl: './app.scss',
 })

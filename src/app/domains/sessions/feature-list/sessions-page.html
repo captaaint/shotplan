@@ -1,0 +1,67 @@
+<app-page-header title="Sessions" subtitle="Upcoming sessions">
+  <button page-actions type="button" class="primary-action" (click)="sessionStore.addTestSession()">
+    Add test session
+  </button>
+</app-page-header>
+
+<section class="stats-panel" aria-label="Session stats">
+  <div>
+    <span class="stat-label">Upcoming</span>
+    <strong>{{ sessionStore.upcomingCount() }}</strong>
+  </div>
+  <div>
+    <span class="stat-label">Booked revenue</span>
+    <strong>{{ sessionStore.bookedRevenue() | currency: 'USD' : 'symbol' : '1.0-0' }}</strong>
+  </div>
+</section>
+
+<app-search-box [(value)]="sessionStore.query"></app-search-box>
+
+<ul class="session-list">
+  @for (session of sessionStore.filteredSessions(); track session.id) {
+    <li class="session-list-item">
+      <app-session-card
+        [session]="session"
+        [selected]="sessionStore.selectedSessionId() === session.id"
+        (select)="sessionStore.selectSession($event)"
+        (markDone)="sessionStore.markSessionDone($event)"
+      ></app-session-card>
+    </li>
+  } @empty {
+    <li>
+      <app-empty-state
+        title="No sessions match your search"
+        message="Clear the search box to return to the full session list."
+      ></app-empty-state>
+    </li>
+  }
+</ul>
+
+@if (sessionStore.selectedSession(); as session) {
+  <section class="detail-panel" aria-label="Selected session details">
+    <p class="detail-kicker">Selected session</p>
+    <h3>{{ session.clientName }}</h3>
+    <dl>
+      <div>
+        <dt>Type</dt>
+        <dd>{{ session.type }}</dd>
+      </div>
+      <div>
+        <dt>Date</dt>
+        <dd>{{ session.date | date: 'fullDate' }}</dd>
+      </div>
+      <div>
+        <dt>Status</dt>
+        <dd>{{ session.status }}</dd>
+      </div>
+      <div>
+        <dt>Price</dt>
+        <dd>{{ session.price | currency: 'USD' : 'symbol' : '1.0-0' }}</dd>
+      </div>
+    </dl>
+
+    @if (session.galleryUrl) {
+      <a class="gallery-link" [href]="session.galleryUrl">Open gallery</a>
+    }
+  </section>
+}
