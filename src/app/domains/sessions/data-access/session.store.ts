@@ -1,55 +1,15 @@
-import { Injectable, computed, signal } from '@angular/core';
-import { Session } from './session.models';
+import { isPlatformBrowser } from '@angular/common';
+import { Injectable, PLATFORM_ID, computed, inject, signal } from '@angular/core';
 
-const INITIAL_SESSIONS: Session[] = [
-  {
-    id: 's-101',
-    clientName: 'Anna',
-    type: 'Portrait',
-    date: new Date('2026-07-15'),
-    price: 240,
-    status: 'booked',
-    galleryUrl: '/gallery/anna-portrait',
-  },
-  {
-    id: 's-102',
-    clientName: 'Mark',
-    type: 'Engagement',
-    date: new Date('2026-07-18'),
-    price: 420,
-    status: 'inquiry',
-  },
-  {
-    id: 's-103',
-    clientName: 'Elena',
-    type: 'Family',
-    date: new Date('2026-07-22'),
-    price: 320,
-    status: 'booked',
-    galleryUrl: '/gallery/elena-family',
-  },
-  {
-    id: 's-104',
-    clientName: 'David',
-    type: 'Headshots',
-    date: new Date('2026-07-29'),
-    price: 180,
-    status: 'done',
-    galleryUrl: '/gallery/david-headshots',
-  },
-  {
-    id: 's-105',
-    clientName: 'Sophie',
-    type: 'Branding',
-    date: new Date('2026-08-03'),
-    price: 560,
-    status: 'inquiry',
-  },
-];
+import { SessionApi } from './session.api';
+import { Session } from './session.models';
 
 @Injectable({ providedIn: 'root' })
 export class SessionStore {
-  private readonly sessionsSignal = signal<Session[]>(INITIAL_SESSIONS);
+  private readonly api = inject(SessionApi);
+  private readonly platformId = inject(PLATFORM_ID);
+
+  private readonly sessionsSignal = signal<Session[]>([]);
   private readonly selectedSessionIdSignal = signal<string | null>(null);
 
   readonly query = signal('');
@@ -84,6 +44,19 @@ export class SessionStore {
     );
   });
 
+  constructor() {
+    if (isPlatformBrowser(this.platformId)) {
+      this.loadSessions();
+    }
+  }
+
+  loadSessions(): void {
+    this.api.getSessions().subscribe({
+      next: (sessions) => this.sessionsSignal.set(sessions),
+      error: (error) => console.error('Could not load sessions', error),
+    });
+  }
+
   sessionById(sessionId: string): Session | null {
     return this.sessionsSignal().find((session) => session.id === sessionId) ?? null;
   }
@@ -93,11 +66,14 @@ export class SessionStore {
   }
 
   markSessionDone(sessionId: string): void {
-    this.sessionsSignal.update((sessions) =>
-      sessions.map((session) =>
-        session.id === sessionId ? { ...session, status: 'done' } : session,
-      ),
-    );
+    this.api.updateSession(sessionId, { status: 'done' }).subscribe({
+      next: (updatedSession) => {
+        this.sessionsSignal.update((sessions) =>
+          sessions.map((session) => (session.id === sessionId ? updatedSession : session)),
+        );
+      },
+      error: (error) => console.error('Could not update session', error),
+    });
   }
 
   addTestSession(): void {
@@ -106,12 +82,17 @@ export class SessionStore {
       id: `s-${Date.now()}`,
       clientName: `Test Client ${sessionNumber}`,
       type: 'Mini Session',
-      date: new Date('2026-08-10'),
+      date: '2026-08-10',
       price: 150,
       status: 'booked',
     };
 
-    this.sessionsSignal.update((sessions) => [...sessions, newSession]);
-    this.selectedSessionIdSignal.set(newSession.id);
+    this.api.createSession(newSession).subscribe({
+      next: (createdSession) => {
+        this.sessionsSignal.update((sessions) => [...sessions, createdSession]);
+        this.selectedSessionIdSignal.set(createdSession.id);
+      },
+      error: (error) => console.error('Could not create session', error),
+    });
   }
 }

@@ -1,0 +1,67 @@
+{
+  "sessions": [
+    {
+      "id": "s-101",
+      "clientName": "Anna",
+      "type": "Portrait",
+      "date": "2026-07-15",
+      "price": 240,
+      "status": "booked",
+      "galleryUrl": "/gallery/anna-portrait"
+    },
+    {
+      "id": "s-102",
+      "clientName": "Mark",
+      "type": "Engagement",
+      "date": "2026-07-18",
+      "price": 420,
+      "status": "inquiry"
+    },
+    {
+      "id": "s-103",
+      "clientName": "Elena",
+      "type": "Family",
+      "date": "2026-07-22",
+      "price": 320,
+      "status": "booked",
+      "galleryUrl": "/gallery/elena-family"
+    },
+    {
+      "id": "s-104",
+      "clientName": "David",
+      "type": "Headshots",
+      "date": "2026-07-29",
+      "price": 180,
+      "status": "done",
+      "galleryUrl": "/gallery/david-headshots"
+    },
+    {
+      "id": "s-105",
+      "clientName": "Sophie",
+      "type": "Branding",
+      "date": "2026-08-03",
+      "price": 560,
+      "status": "inquiry"
+    }
+  ],
+  "clients": [
+    {
+      "id": "c-101",
+      "fullName": "Anna Kovacs",
+      "email": "anna@example.com",
+      "phone": "+36 20 111 1111"
+    },
+    {
+      "id": "c-102",
+      "fullName": "Mark Turner",
+      "email": "mark@example.com",
+      "phone": "+36 20 222 2222"
+    },
+    {
+      "id": "c-103",
+      "fullName": "Elena Morris",
+      "email": "elena@example.com",
+      "phone": "+36 20 333 3333"
+    }
+  ]
+}
