@@ -1,21 +1,11 @@
 import { Component, PLATFORM_ID, computed, effect, inject, signal } from '@angular/core';
 import { CurrencyPipe, DatePipe, isPlatformBrowser } from '@angular/common';
-
-type SessionStatus = 'inquiry' | 'booked' | 'done';
-
-interface Session {
-  id: string;
-  clientName: string;
-  type: string;
-  date: Date;
-  price: number;
-  status: SessionStatus;
-  galleryUrl?: string;
-}
+import { SessionCard } from './domains/sessions/components/session-card/session-card';
+import { Session } from './session.model';
 
 @Component({
   selector: 'app-root',
-  imports: [CurrencyPipe, DatePipe],
+  imports: [CurrencyPipe, DatePipe, SessionCard],
   templateUrl: './app.html',
   styleUrl: './app.scss',
 })

@@ -21,29 +21,13 @@
 <ul class="session-list">
   @for (session of sessions(); track session.id) {
     <li
-      class="session-row"
-      [class.session-row-selected]="selectedSessionId() === session.id"
+      class="session-list-item"
       (click)="selectSession(session.id)"
     >
-      <div class="session-main">
-        <strong>{{ session.clientName }}</strong>
-        <span>{{ session.type }}</span>
-        <span>{{ session.date | date: 'yyyy-MM-dd' }}</span>
-        <span>{{ session.price | currency: 'USD' : 'symbol' : '1.0-0' }}</span>
-      </div>
-
-      <span
-        class="status-badge"
-        [class.status-inquiry]="session.status === 'inquiry'"
-        [class.status-booked]="session.status === 'booked'"
-        [class.status-done]="session.status === 'done'"
-      >
-        {{ session.status }}
-      </span>
-
-      @if (session.galleryUrl) {
-        <a class="gallery-link" [href]="session.galleryUrl">Gallery</a>
-      }
+      <app-session-card
+        [session]="session"
+        [selected]="selectedSessionId() === session.id"
+      ></app-session-card>
     </li>
   } @empty {
     <li>No sessions scheduled yet.</li>
