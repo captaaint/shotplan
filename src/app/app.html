@@ -1,6 +1,17 @@
 <h1>{{ title() }}</h1>
 <h2>Upcoming sessions</h2>
 
+<section class="stats-panel" aria-label="Session stats">
+  <div>
+    <span class="stat-label">Upcoming</span>
+    <strong>{{ upcomingCount() }}</strong>
+  </div>
+  <div>
+    <span class="stat-label">Booked revenue</span>
+    <strong>{{ bookedRevenue() | currency: 'USD' : 'symbol' : '1.0-0' }}</strong>
+  </div>
+</section>
+
 <ul class="session-list">
   @for (session of sessions(); track session.id) {
     <li
@@ -12,6 +23,7 @@
         <strong>{{ session.clientName }}</strong>
         <span>{{ session.type }}</span>
         <span>{{ session.date | date: 'yyyy-MM-dd' }}</span>
+        <span>{{ session.price | currency: 'USD' : 'symbol' : '1.0-0' }}</span>
       </div>
 
       <span
@@ -32,31 +44,31 @@
   }
 </ul>
 
-@if (selectedSessionId(); as selectedId) {
-  @for (session of sessions(); track session.id) {
-    @if (session.id === selectedId) {
-      <section class="detail-panel" aria-label="Selected session details">
-        <p class="detail-kicker">Selected session</p>
-        <h3>{{ session.clientName }}</h3>
-        <dl>
-          <div>
-            <dt>Type</dt>
-            <dd>{{ session.type }}</dd>
-          </div>
-          <div>
-            <dt>Date</dt>
-            <dd>{{ session.date | date: 'fullDate' }}</dd>
-          </div>
-          <div>
-            <dt>Status</dt>
-            <dd>{{ session.status }}</dd>
-          </div>
-        </dl>
+@if (selectedSession(); as session) {
+  <section class="detail-panel" aria-label="Selected session details">
+    <p class="detail-kicker">Selected session</p>
+    <h3>{{ session.clientName }}</h3>
+    <dl>
+      <div>
+        <dt>Type</dt>
+        <dd>{{ session.type }}</dd>
+      </div>
+      <div>
+        <dt>Date</dt>
+        <dd>{{ session.date | date: 'fullDate' }}</dd>
+      </div>
+      <div>
+        <dt>Status</dt>
+        <dd>{{ session.status }}</dd>
+      </div>
+      <div>
+        <dt>Price</dt>
+        <dd>{{ session.price | currency: 'USD' : 'symbol' : '1.0-0' }}</dd>
+      </div>
+    </dl>
 
-        @if (session.galleryUrl) {
-          <a class="gallery-link" [href]="session.galleryUrl">Open gallery</a>
-        }
-      </section>
+    @if (session.galleryUrl) {
+      <a class="gallery-link" [href]="session.galleryUrl">Open gallery</a>
     }
-  }
+  </section>
 }
