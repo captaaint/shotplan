@@ -2,7 +2,7 @@ import { HttpClient } from '@angular/common/http';
 import { Injectable, inject } from '@angular/core';
 import { Observable } from 'rxjs';
 
-import { Session } from './session.models';
+import { CreateSessionRequest, Session, UpdateSessionRequest } from './session.models';
 
 @Injectable({ providedIn: 'root' })
 export class SessionApi {
@@ -13,11 +13,15 @@ export class SessionApi {
     return this.http.get<Session[]>(this.sessionsUrl);
   }
 
-  createSession(session: Session): Observable<Session> {
+  getSession(sessionId: string): Observable<Session> {
+    return this.http.get<Session>(`${this.sessionsUrl}/${sessionId}`);
+  }
+
+  createSession(session: CreateSessionRequest): Observable<Session> {
     return this.http.post<Session>(this.sessionsUrl, session);
   }
 
-  updateSession(sessionId: string, changes: Partial<Session>): Observable<Session> {
+  updateSession(sessionId: string, changes: UpdateSessionRequest): Observable<Session> {
     return this.http.patch<Session>(`${this.sessionsUrl}/${sessionId}`, changes);
   }
 }

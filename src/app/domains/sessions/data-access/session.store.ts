@@ -1,8 +1,9 @@
 import { isPlatformBrowser } from '@angular/common';
 import { Injectable, PLATFORM_ID, computed, inject, signal } from '@angular/core';
+import { Observable, tap } from 'rxjs';
 
 import { SessionApi } from './session.api';
-import { Session } from './session.models';
+import { CreateSessionRequest, Session, UpdateSessionRequest } from './session.models';
 
 @Injectable({ providedIn: 'root' })
 export class SessionStore {
@@ -70,6 +71,24 @@ export class SessionStore {
     });
   }
 
+  loadSession(sessionId: string): Observable<Session> {
+    this.loadingSignal.set(true);
+    this.errorSignal.set(null);
+
+    return this.api.getSession(sessionId).pipe(
+      tap({
+        next: (loadedSession) => {
+          this.upsertSession(loadedSession);
+          this.loadingSignal.set(false);
+        },
+        error: () => {
+          this.loadingSignal.set(false);
+          this.errorSignal.set('Could not load this session. Check that the mock API is running.');
+        },
+      }),
+    );
+  }
+
   sessionById(sessionId: string): Session | null {
     return this.sessionsSignal().find((session) => session.id === sessionId) ?? null;
   }
@@ -93,27 +112,67 @@ export class SessionStore {
     });
   }
 
+  createSession(session: CreateSessionRequest): Observable<Session> {
+    this.errorSignal.set(null);
+
+    return this.api.createSession(session).pipe(
+      tap({
+        next: (createdSession) => {
+          this.sessionsSignal.update((sessions) => [...sessions, createdSession]);
+          this.selectedSessionIdSignal.set(createdSession.id);
+        },
+        error: () => {
+          this.errorSignal.set('Could not create the session. Try again in a moment.');
+        },
+      }),
+    );
+  }
+
+  updateSession(sessionId: string, changes: UpdateSessionRequest): Observable<Session> {
+    this.errorSignal.set(null);
+
+    return this.api.updateSession(sessionId, changes).pipe(
+      tap({
+        next: (updatedSession) => {
+          this.upsertSession(updatedSession);
+        },
+        error: () => {
+          this.errorSignal.set('Could not update the session. Try again in a moment.');
+        },
+      }),
+    );
+  }
+
   addTestSession(): void {
     this.errorSignal.set(null);
 
     const sessionNumber = this.sessionsSignal().length + 1;
-    const newSession: Session = {
-      id: `s-${Date.now()}`,
+    const newSession: CreateSessionRequest = {
+      clientId: 'c-101',
       clientName: `Test Client ${sessionNumber}`,
       type: 'Mini Session',
       date: '2026-08-10',
       price: 150,
       status: 'booked',
+      shotList: ['Arrival portraits', 'Favorite detail shots'],
     };
 
-    this.api.createSession(newSession).subscribe({
-      next: (createdSession) => {
-        this.sessionsSignal.update((sessions) => [...sessions, createdSession]);
-        this.selectedSessionIdSignal.set(createdSession.id);
-      },
+    this.createSession(newSession).subscribe({
       error: () => {
         this.errorSignal.set('Could not create the test session. Try again in a moment.');
       },
+    });
+  }
+
+  private upsertSession(nextSession: Session): void {
+    this.sessionsSignal.update((sessions) => {
+      const existingSession = sessions.some((session) => session.id === nextSession.id);
+
+      if (!existingSession) {
+        return [...sessions, nextSession];
+      }
+
+      return sessions.map((session) => (session.id === nextSession.id ? nextSession : session));
     });
   }
 }

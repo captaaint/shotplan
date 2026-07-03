@@ -1,0 +1,18 @@
+<app-page-header title="New session" subtitle="Plan a shoot from client to shot list">
+  <a page-actions class="back-link" routerLink="/sessions">Back to sessions</a>
+</app-page-header>
+
+@if (clientStore.loading()) {
+  <app-loading-state message="Loading clients"></app-loading-state>
+} @else if (clientStore.error(); as error) {
+  <app-error-state [message]="error" (retry)="clientStore.loadClients()"></app-error-state>
+} @else if (sessionStore.error(); as error) {
+  <app-error-state [message]="error" (retry)="sessionStore.loadSessions()"></app-error-state>
+} @else {
+  <app-session-form
+    submitLabel="Create session"
+    [clients]="clientStore.clients()"
+    [saving]="submitting()"
+    (save)="createSession($event)"
+  ></app-session-form>
+}

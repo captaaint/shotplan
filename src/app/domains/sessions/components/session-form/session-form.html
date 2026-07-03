@@ -1,0 +1,84 @@
+<form class="session-form" [formGroup]="form" (ngSubmit)="submit()">
+  <label>
+    <span>Client</span>
+    <select formControlName="clientId">
+      <option value="">Choose a client</option>
+      @for (client of clients(); track client.id) {
+        <option [value]="client.id">{{ client.fullName }}</option>
+      }
+    </select>
+    @if (form.controls.clientId.touched && form.controls.clientId.hasError('required')) {
+      <small>Client is required.</small>
+    }
+  </label>
+
+  <label>
+    <span>Session type</span>
+    <input type="text" formControlName="type" />
+    @if (form.controls.type.touched && form.controls.type.hasError('required')) {
+      <small>Session type is required.</small>
+    }
+  </label>
+
+  <label>
+    <span>Date</span>
+    <input type="date" formControlName="date" />
+    @if (form.controls.date.touched && form.controls.date.hasError('required')) {
+      <small>Date is required.</small>
+    }
+  </label>
+
+  <label>
+    <span>Price</span>
+    <input type="number" formControlName="price" min="0" />
+    @if (form.controls.price.touched && form.controls.price.hasError('required')) {
+      <small>Price is required.</small>
+    } @else if (form.controls.price.touched && form.controls.price.hasError('min')) {
+      <small>Price cannot be negative.</small>
+    }
+  </label>
+
+  <label>
+    <span>Status</span>
+    <select formControlName="status">
+      <option value="inquiry">Inquiry</option>
+      <option value="booked">Booked</option>
+      <option value="done">Done</option>
+    </select>
+  </label>
+
+  <label>
+    <span>Gallery URL</span>
+    <input type="text" formControlName="galleryUrl" />
+  </label>
+
+  <fieldset class="wide-field" formArrayName="shotList">
+    <legend>Shot list</legend>
+
+    <div class="shot-list">
+      @for (shot of shotList.controls; track $index) {
+        <div class="shot-row">
+          <label>
+            <span>Shot {{ $index + 1 }}</span>
+            <input type="text" [formControlName]="$index" />
+            @if (shot.touched && shot.hasError('required')) {
+              <small>Shot description is required.</small>
+            }
+          </label>
+
+          <button type="button" class="secondary-action" (click)="removeShot($index)">
+            Remove
+          </button>
+        </div>
+      }
+    </div>
+
+    <button type="button" class="secondary-action add-shot" (click)="addShot()">Add shot</button>
+  </fieldset>
+
+  <div class="form-actions">
+    <button type="submit" [disabled]="form.invalid || saving()">
+      {{ saving() ? 'Saving...' : submitLabel() }}
+    </button>
+  </div>
+</form>

@@ -1,4 +1,7 @@
+.primary-link,
 .primary-action {
+  display: inline-flex;
+  align-items: center;
   border: 0;
   border-radius: 0.5rem;
   cursor: pointer;
@@ -7,8 +10,10 @@
   padding: 0.75rem 1rem;
   background: #1f2937;
   color: #ffffff;
+  text-decoration: none;
 }
 
+.primary-link:hover,
 .primary-action:hover {
   filter: brightness(0.96);
 }

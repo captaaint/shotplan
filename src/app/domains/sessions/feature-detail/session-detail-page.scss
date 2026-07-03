@@ -50,3 +50,28 @@ dt {
 dd {
   margin: 0;
 }
+
+.shot-list-panel {
+  margin-top: 1.25rem;
+  padding-top: 1rem;
+  border-top: 1px solid #e5e7eb;
+}
+
+.shot-list-panel h2 {
+  margin: 0 0 0.75rem;
+  font-size: 1.15rem;
+}
+
+ol {
+  margin: 0;
+  padding-left: 1.2rem;
+}
+
+li + li {
+  margin-top: 0.4rem;
+}
+
+.shot-list-panel p {
+  margin: 0;
+  color: #64748b;
+}

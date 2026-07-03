@@ -2,54 +2,102 @@
   "sessions": [
     {
       "id": "s-101",
+      "clientId": "c-101",
       "clientName": "Anna",
       "type": "Portrait",
       "date": "2026-07-15",
       "price": 240,
       "status": "booked",
-      "galleryUrl": "/gallery/anna-portrait"
+      "galleryUrl": "/gallery/anna-portrait",
+      "shotList": [
+        "Window light portraits",
+        "Close-up headshots",
+        "Profile detail"
+      ]
     },
     {
       "id": "s-102",
+      "clientId": "c-102",
       "clientName": "Mark",
       "type": "Engagement",
       "date": "2026-07-18",
       "price": 420,
-      "status": "inquiry"
+      "status": "inquiry",
+      "shotList": [
+        "Ring detail",
+        "Walking portraits",
+        "Wide location frame"
+      ]
     },
     {
       "id": "s-103",
+      "clientId": "c-103",
       "clientName": "Elena",
       "type": "Family",
       "date": "2026-07-22",
       "price": 320,
       "status": "done",
-      "galleryUrl": "/gallery/elena-family"
+      "galleryUrl": "/gallery/elena-family",
+      "shotList": [
+        "Full family portrait",
+        "Kids together",
+        "Parent portraits"
+      ]
     },
     {
       "id": "s-104",
+      "clientId": "c-102",
       "clientName": "David",
       "type": "Headshots",
       "date": "2026-07-29",
       "price": 180,
       "status": "done",
-      "galleryUrl": "/gallery/david-headshots"
+      "galleryUrl": "/gallery/david-headshots",
+      "shotList": [
+        "LinkedIn crop",
+        "Horizontal website crop",
+        "Black background option"
+      ]
     },
     {
       "id": "s-105",
+      "clientId": "c-101",
       "clientName": "Sophie",
       "type": "Branding",
       "date": "2026-08-03",
       "price": 560,
-      "status": "inquiry"
+      "status": "inquiry",
+      "shotList": [
+        "Workspace portraits",
+        "Product interaction",
+        "Social media crops"
+      ]
     },
     {
       "id": "2bnTInQYGKE",
+      "clientId": "c-101",
       "clientName": "Test Client 6",
       "type": "Mini Session",
       "date": "2026-08-10",
       "price": 150,
-      "status": "booked"
+      "status": "booked",
+      "shotList": [
+        "Arrival portraits",
+        "Favorite detail shots"
+      ]
+    },
+    {
+      "clientId": "c-101",
+      "clientName": "Test Client 8",
+      "type": "Mini Session",
+      "date": "2026-08-10",
+      "price": 150,
+      "status": "booked",
+      "shotList": [
+        "Arrival portraits",
+        "Favorite detail shots"
+      ],
+      "id": "ADpd5MHfuSY"
     }
   ],
   "clients": [
