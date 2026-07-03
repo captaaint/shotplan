@@ -17,6 +17,41 @@ h2 {
   color: #4b5563;
 }
 
+.page-header {
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+  gap: 1rem;
+  margin-bottom: 1.5rem;
+}
+
+.primary-action,
+.secondary-action {
+  border: 0;
+  border-radius: 0.5rem;
+  cursor: pointer;
+  font: inherit;
+  font-weight: 700;
+}
+
+.primary-action {
+  padding: 0.75rem 1rem;
+  background: #1f2937;
+  color: #ffffff;
+}
+
+.secondary-action {
+  margin-left: 1rem;
+  padding: 0.5rem 0.75rem;
+  background: #e0f2fe;
+  color: #075985;
+}
+
+.primary-action:hover,
+.secondary-action:hover {
+  filter: brightness(0.96);
+}
+
 .stats-panel {
   display: grid;
   grid-template-columns: repeat(2, minmax(0, 12rem));
@@ -164,6 +199,10 @@ h2 {
 }
 
 @media (max-width: 40rem) {
+  .page-header {
+    display: grid;
+  }
+
   .stats-panel {
     grid-template-columns: 1fr;
   }

@@ -87,4 +87,33 @@ export class App {
   protected selectSession(sessionId: string): void {
     this.selectedSessionId.set(sessionId);
   }
+
+  protected markSelectedDone(): void {
+    const selectedId = this.selectedSessionId();
+
+    if (!selectedId) {
+      return;
+    }
+
+    this.sessions.update((sessions) =>
+      sessions.map((session) =>
+        session.id === selectedId ? { ...session, status: 'done' } : session,
+      ),
+    );
+  }
+
+  protected addTestSession(): void {
+    const sessionNumber = this.sessions().length + 1;
+    const newSession: Session = {
+      id: `s-${Date.now()}`,
+      clientName: `Test Client ${sessionNumber}`,
+      type: 'Mini Session',
+      date: new Date('2026-08-10'),
+      price: 150,
+      status: 'booked',
+    };
+
+    this.sessions.update((sessions) => [...sessions, newSession]);
+    this.selectedSessionId.set(newSession.id);
+  }
 }

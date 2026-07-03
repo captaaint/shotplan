@@ -1,5 +1,11 @@
-<h1>{{ title() }}</h1>
-<h2>Upcoming sessions</h2>
+<header class="page-header">
+  <div>
+    <h1>{{ title() }}</h1>
+    <h2>Upcoming sessions</h2>
+  </div>
+
+  <button type="button" class="primary-action" (click)="addTestSession()">Add test session</button>
+</header>
 
 <section class="stats-panel" aria-label="Session stats">
   <div>
@@ -69,6 +75,10 @@
 
     @if (session.galleryUrl) {
       <a class="gallery-link" [href]="session.galleryUrl">Open gallery</a>
+    }
+
+    @if (session.status !== 'done') {
+      <button type="button" class="secondary-action" (click)="markSelectedDone()">Mark done</button>
     }
   </section>
 }
