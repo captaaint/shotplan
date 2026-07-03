@@ -2,11 +2,13 @@ import { Component, PLATFORM_ID, computed, effect, inject, signal } from '@angul
 import { CurrencyPipe, DatePipe, isPlatformBrowser } from '@angular/common';
 import { SessionCard } from './domains/sessions/components/session-card/session-card';
 import { Session } from './session.model';
+import { EmptyState } from './shared/ui/empty-state/empty-state';
+import { PageHeader } from './shared/ui/page-header/page-header';
 import { SearchBox } from './shared/ui/search-box/search-box';
 
 @Component({
   selector: 'app-root',
-  imports: [CurrencyPipe, DatePipe, SearchBox, SessionCard],
+  imports: [CurrencyPipe, DatePipe, EmptyState, PageHeader, SearchBox, SessionCard],
   templateUrl: './app.html',
   styleUrl: './app.scss',
 })

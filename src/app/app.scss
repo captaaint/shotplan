@@ -5,26 +5,6 @@
   color: #1f2937;
 }
 
-h1 {
-  margin: 0 0 0.5rem;
-  font-size: 2.5rem;
-}
-
-h2 {
-  margin: 0 0 1.5rem;
-  font-size: 1.25rem;
-  font-weight: 600;
-  color: #4b5563;
-}
-
-.page-header {
-  display: flex;
-  align-items: flex-start;
-  justify-content: space-between;
-  gap: 1rem;
-  margin-bottom: 1.5rem;
-}
-
 .primary-action {
   border: 0;
   border-radius: 0.5rem;
@@ -130,10 +110,6 @@ h2 {
 }
 
 @media (max-width: 40rem) {
-  .page-header {
-    display: grid;
-  }
-
   .stats-panel {
     grid-template-columns: 1fr;
   }
