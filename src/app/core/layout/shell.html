@@ -1,15 +1,59 @@
-<div class="shell">
-  <aside class="sidebar" aria-label="Primary navigation">
-    <a class="brand" routerLink="/dashboard">Shotplan</a>
+<mat-sidenav-container class="shell">
+  <mat-sidenav
+    #drawer
+    class="sidenav"
+    fixedInViewport
+    [mode]="isDrawerMode() ? 'over' : 'side'"
+    [opened]="!isDrawerMode()"
+  >
+    <a class="brand" routerLink="/dashboard">
+      <span class="brand-mark">S</span>
+      <span>Shotplan</span>
+    </a>
 
-    <nav>
-      <a routerLink="/dashboard" routerLinkActive="active-link">Dashboard</a>
-      <a routerLink="/sessions" routerLinkActive="active-link">Sessions</a>
-      <a routerLink="/clients" routerLinkActive="active-link">Clients</a>
-    </nav>
-  </aside>
+    <mat-nav-list aria-label="Primary navigation">
+      <a
+        mat-list-item
+        routerLink="/dashboard"
+        routerLinkActive="active-link"
+        (click)="isDrawerMode() && drawer.close()"
+      >
+        <mat-icon matListItemIcon>dashboard</mat-icon>
+        <span matListItemTitle>Dashboard</span>
+      </a>
+      <a
+        mat-list-item
+        routerLink="/sessions"
+        routerLinkActive="active-link"
+        (click)="isDrawerMode() && drawer.close()"
+      >
+        <mat-icon matListItemIcon>photo_camera</mat-icon>
+        <span matListItemTitle>Sessions</span>
+      </a>
+      <a
+        mat-list-item
+        routerLink="/clients"
+        routerLinkActive="active-link"
+        (click)="isDrawerMode() && drawer.close()"
+      >
+        <mat-icon matListItemIcon>group</mat-icon>
+        <span matListItemTitle>Clients</span>
+      </a>
+    </mat-nav-list>
+  </mat-sidenav>
 
-  <main class="content">
-    <router-outlet></router-outlet>
-  </main>
-</div>
+  <mat-sidenav-content>
+    <mat-toolbar class="topbar">
+      <button type="button" mat-icon-button class="menu-button" (click)="drawer.toggle()">
+        <mat-icon>menu</mat-icon>
+      </button>
+      <span>Shotplan</span>
+      <span class="toolbar-spacer"></span>
+      <span class="toolbar-kicker">Photography workflow</span>
+    </mat-toolbar>
+
+    <main class="content">
+      <router-outlet></router-outlet>
+    </main>
+  </mat-sidenav-content>
+</mat-sidenav-container>

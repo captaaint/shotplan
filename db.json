@@ -11,7 +11,11 @@
       "price": 240,
       "status": "booked",
       "galleryUrl": "/gallery/anna-portrait",
-      "shotList": ["Window light portraits", "Close-up headshots", "Profile detail"]
+      "shotList": [
+        "Window light portraits",
+        "Close-up headshots",
+        "Profile detail"
+      ]
     },
     {
       "id": "s-102",
@@ -23,7 +27,11 @@
       "endTime": "19:00",
       "price": 420,
       "status": "inquiry",
-      "shotList": ["Ring detail", "Walking portraits", "Wide location frame"]
+      "shotList": [
+        "Ring detail",
+        "Walking portraits",
+        "Wide location frame"
+      ]
     },
     {
       "id": "s-103",
@@ -36,7 +44,11 @@
       "price": 320,
       "status": "done",
       "galleryUrl": "/gallery/elena-family",
-      "shotList": ["Full family portrait", "Kids together", "Parent portraits"]
+      "shotList": [
+        "Full family portrait",
+        "Kids together",
+        "Parent portraits"
+      ]
     },
     {
       "id": "s-104",
@@ -49,7 +61,11 @@
       "price": 180,
       "status": "done",
       "galleryUrl": "/gallery/david-headshots",
-      "shotList": ["LinkedIn crop", "Horizontal website crop", "Black background option"]
+      "shotList": [
+        "LinkedIn crop",
+        "Horizontal website crop",
+        "Black background option"
+      ]
     },
     {
       "id": "s-105",
@@ -61,7 +77,11 @@
       "endTime": "16:00",
       "price": 560,
       "status": "inquiry",
-      "shotList": ["Workspace portraits", "Product interaction", "Social media crops"]
+      "shotList": [
+        "Workspace portraits",
+        "Product interaction",
+        "Social media crops"
+      ]
     },
     {
       "id": "2bnTInQYGKE",
@@ -73,7 +93,10 @@
       "endTime": "11:00",
       "price": 150,
       "status": "booked",
-      "shotList": ["Arrival portraits", "Favorite detail shots"]
+      "shotList": [
+        "Arrival portraits",
+        "Favorite detail shots"
+      ]
     },
     {
       "clientId": "c-101",
@@ -82,8 +105,26 @@
       "date": "2026-08-10",
       "price": 150,
       "status": "booked",
-      "shotList": ["Arrival portraits", "Favorite detail shots"],
+      "shotList": [
+        "Arrival portraits",
+        "Favorite detail shots"
+      ],
       "id": "ADpd5MHfuSY"
+    },
+    {
+      "clientId": "c-101",
+      "clientName": "Test Client 8",
+      "type": "Mini Session",
+      "date": "2026-08-10",
+      "startTime": "10:00",
+      "endTime": "11:00",
+      "price": 150,
+      "status": "booked",
+      "shotList": [
+        "Arrival portraits",
+        "Favorite detail shots"
+      ],
+      "id": "xiOov7cPaJo"
     }
   ],
   "clients": [
