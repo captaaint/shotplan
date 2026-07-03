@@ -2,6 +2,7 @@ import { Component, computed, effect, inject, input, signal, viewChild } from '@
 import { Router, RouterLink } from '@angular/router';
 
 import { HasUnsavedChanges } from '../../../core/guards/unsaved-changes.guard';
+import { NotificationService } from '../../../core/services/notification.service';
 import { EmptyState } from '../../../shared/ui/empty-state/empty-state';
 import { ErrorState } from '../../../shared/ui/error-state/error-state';
 import { LoadingState } from '../../../shared/ui/loading-state/loading-state';
@@ -20,6 +21,7 @@ export class ClientEditPage implements HasUnsavedChanges {
   readonly id = input.required<string>();
 
   private readonly router = inject(Router);
+  private readonly notificationService = inject(NotificationService);
   protected readonly clientStore = inject(ClientStore);
 
   private readonly clientForm = viewChild(ClientForm);
@@ -37,10 +39,12 @@ export class ClientEditPage implements HasUnsavedChanges {
       next: () => {
         this.submitting.set(false);
         this.clientForm()?.markSaved();
+        this.notificationService.success('Client updated.');
         void this.router.navigateByUrl('/clients');
       },
       error: () => {
         this.submitting.set(false);
+        this.notificationService.error('Could not update the client.');
       },
     });
   }

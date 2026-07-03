@@ -1,5 +1,11 @@
 import { provideHttpClient, withFetch, withInterceptors } from '@angular/common/http';
-import { ApplicationConfig, provideBrowserGlobalErrorListeners } from '@angular/core';
+import {
+  ApplicationConfig,
+  importProvidersFrom,
+  provideBrowserGlobalErrorListeners,
+} from '@angular/core';
+import { MatDialogModule } from '@angular/material/dialog';
+import { MatSnackBarModule } from '@angular/material/snack-bar';
 import { provideAnimationsAsync } from '@angular/platform-browser/animations/async';
 import { provideClientHydration, withEventReplay } from '@angular/platform-browser';
 import { provideRouter, withComponentInputBinding } from '@angular/router';
@@ -14,5 +20,6 @@ export const appConfig: ApplicationConfig = {
     provideRouter(routes, withComponentInputBinding()),
     provideClientHydration(withEventReplay()),
     provideAnimationsAsync(),
+    importProvidersFrom(MatDialogModule, MatSnackBarModule),
   ],
 };

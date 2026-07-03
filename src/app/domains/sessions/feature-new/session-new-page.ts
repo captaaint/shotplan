@@ -2,6 +2,7 @@ import { Component, inject, signal, viewChild } from '@angular/core';
 import { Router, RouterLink } from '@angular/router';
 
 import { HasUnsavedChanges } from '../../../core/guards/unsaved-changes.guard';
+import { NotificationService } from '../../../core/services/notification.service';
 import { ErrorState } from '../../../shared/ui/error-state/error-state';
 import { LoadingState } from '../../../shared/ui/loading-state/loading-state';
 import { PageHeader } from '../../../shared/ui/page-header/page-header';
@@ -18,6 +19,7 @@ import { SessionStore } from '../data-access/session.store';
 })
 export class SessionNewPage implements HasUnsavedChanges {
   private readonly router = inject(Router);
+  private readonly notificationService = inject(NotificationService);
   protected readonly clientStore = inject(ClientStore);
   protected readonly sessionStore = inject(SessionStore);
 
@@ -31,10 +33,12 @@ export class SessionNewPage implements HasUnsavedChanges {
       next: (createdSession) => {
         this.submitting.set(false);
         this.sessionForm()?.markSaved();
+        this.notificationService.success('Session created.');
         void this.router.navigate(['/sessions', createdSession.id]);
       },
       error: () => {
         this.submitting.set(false);
+        this.notificationService.error('Could not create the session.');
       },
     });
   }

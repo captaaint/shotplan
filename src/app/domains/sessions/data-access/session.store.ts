@@ -143,7 +143,28 @@ export class SessionStore {
     );
   }
 
-  addTestSession(): void {
+  deleteSession(sessionId: string): Observable<void> {
+    this.errorSignal.set(null);
+
+    return this.api.deleteSession(sessionId).pipe(
+      tap({
+        next: () => {
+          this.sessionsSignal.update((sessions) =>
+            sessions.filter((session) => session.id !== sessionId),
+          );
+
+          if (this.selectedSessionIdSignal() === sessionId) {
+            this.selectedSessionIdSignal.set(null);
+          }
+        },
+        error: () => {
+          this.errorSignal.set('Could not delete the session. Try again in a moment.');
+        },
+      }),
+    );
+  }
+
+  addTestSession(): Observable<Session> {
     this.errorSignal.set(null);
 
     const sessionNumber = this.sessionsSignal().length + 1;
@@ -159,11 +180,7 @@ export class SessionStore {
       shotList: ['Arrival portraits', 'Favorite detail shots'],
     };
 
-    this.createSession(newSession).subscribe({
-      error: () => {
-        this.errorSignal.set('Could not create the test session. Try again in a moment.');
-      },
-    });
+    return this.createSession(newSession);
   }
 
   private upsertSession(nextSession: Session): void {

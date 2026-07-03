@@ -2,6 +2,7 @@ import { Component, computed, effect, inject, input, signal, viewChild } from '@
 import { Router, RouterLink } from '@angular/router';
 
 import { HasUnsavedChanges } from '../../../core/guards/unsaved-changes.guard';
+import { NotificationService } from '../../../core/services/notification.service';
 import { EmptyState } from '../../../shared/ui/empty-state/empty-state';
 import { ErrorState } from '../../../shared/ui/error-state/error-state';
 import { LoadingState } from '../../../shared/ui/loading-state/loading-state';
@@ -21,6 +22,7 @@ export class SessionEditPage implements HasUnsavedChanges {
   readonly id = input.required<string>();
 
   private readonly router = inject(Router);
+  private readonly notificationService = inject(NotificationService);
   protected readonly clientStore = inject(ClientStore);
   protected readonly sessionStore = inject(SessionStore);
 
@@ -39,10 +41,12 @@ export class SessionEditPage implements HasUnsavedChanges {
       next: (updatedSession) => {
         this.submitting.set(false);
         this.sessionForm()?.markSaved();
+        this.notificationService.success('Session updated.');
         void this.router.navigate(['/sessions', updatedSession.id]);
       },
       error: () => {
         this.submitting.set(false);
+        this.notificationService.error('Could not update the session.');
       },
     });
   }

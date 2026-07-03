@@ -24,4 +24,8 @@ export class SessionApi {
   updateSession(sessionId: string, changes: UpdateSessionRequest): Observable<Session> {
     return this.http.patch<Session>(`${this.sessionsUrl}/${sessionId}`, changes);
   }
+
+  deleteSession(sessionId: string): Observable<void> {
+    return this.http.delete<void>(`${this.sessionsUrl}/${sessionId}`);
+  }
 }

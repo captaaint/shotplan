@@ -82,49 +82,6 @@
         "Product interaction",
         "Social media crops"
       ]
-    },
-    {
-      "id": "2bnTInQYGKE",
-      "clientId": "c-101",
-      "clientName": "Test Client 6",
-      "type": "Mini Session",
-      "date": "2026-08-10",
-      "startTime": "10:00",
-      "endTime": "11:00",
-      "price": 150,
-      "status": "booked",
-      "shotList": [
-        "Arrival portraits",
-        "Favorite detail shots"
-      ]
-    },
-    {
-      "clientId": "c-101",
-      "clientName": "Test Client 8",
-      "type": "Mini Session",
-      "date": "2026-08-10",
-      "price": 150,
-      "status": "booked",
-      "shotList": [
-        "Arrival portraits",
-        "Favorite detail shots"
-      ],
-      "id": "ADpd5MHfuSY"
-    },
-    {
-      "clientId": "c-101",
-      "clientName": "Test Client 8",
-      "type": "Mini Session",
-      "date": "2026-08-10",
-      "startTime": "10:00",
-      "endTime": "11:00",
-      "price": 150,
-      "status": "booked",
-      "shotList": [
-        "Arrival portraits",
-        "Favorite detail shots"
-      ],
-      "id": "xiOov7cPaJo"
     }
   ],
   "clients": [

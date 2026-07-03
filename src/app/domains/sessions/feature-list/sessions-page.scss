@@ -44,18 +44,43 @@
   font-size: 1.6rem;
 }
 
-.session-list {
-  list-style: none;
+.table-panel {
+  overflow-x: auto;
   margin: 1rem 0 0;
-  padding: 0;
-  display: grid;
-  gap: 0.75rem;
+  border: 1px solid #d1d5db;
+  border-radius: 0.75rem;
+  background: #ffffff;
 }
 
-.session-card-link {
-  display: block;
-  color: inherit;
-  text-decoration: none;
+table {
+  width: 100%;
+}
+
+.status-pill {
+  display: inline-flex;
+  align-items: center;
+  border-radius: 999px;
+  padding: 0.25rem 0.6rem;
+  background: #eef2ff;
+  color: #3730a3;
+  font-size: 0.8rem;
+  font-weight: 700;
+  text-transform: capitalize;
+}
+
+.status-pill.done {
+  background: #dcfce7;
+  color: #166534;
+}
+
+.row-actions {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.2rem;
+}
+
+.danger-action {
+  color: #b91c1c;
 }
 
 @media (max-width: 40rem) {

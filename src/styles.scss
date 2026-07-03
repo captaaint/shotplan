@@ -41,3 +41,9 @@ body {
   -webkit-font-feature-settings: 'liga';
   -webkit-font-smoothing: antialiased;
 }
+
+.error-snackbar {
+  --mdc-snackbar-container-color: #991b1b;
+  --mdc-snackbar-supporting-text-color: #ffffff;
+  --mat-snack-bar-button-color: #ffffff;
+}
