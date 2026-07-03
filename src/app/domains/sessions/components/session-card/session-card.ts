@@ -1,6 +1,6 @@
 import { CurrencyPipe, DatePipe } from '@angular/common';
 import { Component, input, output } from '@angular/core';
-import { Session } from '../../../../session.model';
+import { Session } from '../../data-access/session.models';
 
 @Component({
   selector: 'app-session-card',

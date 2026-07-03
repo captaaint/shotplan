@@ -1,5 +1,5 @@
 <app-page-header [title]="title()" subtitle="Upcoming sessions">
-  <button page-actions type="button" class="primary-action" (click)="addTestSession()">
+  <button page-actions type="button" class="primary-action" (click)="sessionStore.addTestSession()">
     Add test session
   </button>
 </app-page-header>
@@ -7,24 +7,24 @@
 <section class="stats-panel" aria-label="Session stats">
   <div>
     <span class="stat-label">Upcoming</span>
-    <strong>{{ upcomingCount() }}</strong>
+    <strong>{{ sessionStore.upcomingCount() }}</strong>
   </div>
   <div>
     <span class="stat-label">Booked revenue</span>
-    <strong>{{ bookedRevenue() | currency: 'USD' : 'symbol' : '1.0-0' }}</strong>
+    <strong>{{ sessionStore.bookedRevenue() | currency: 'USD' : 'symbol' : '1.0-0' }}</strong>
   </div>
 </section>
 
-<app-search-box [(value)]="query"></app-search-box>
+<app-search-box [(value)]="sessionStore.query"></app-search-box>
 
 <ul class="session-list">
-  @for (session of filteredSessions(); track session.id) {
+  @for (session of sessionStore.filteredSessions(); track session.id) {
     <li class="session-list-item">
       <app-session-card
         [session]="session"
-        [selected]="selectedSessionId() === session.id"
-        (select)="selectSession($event)"
-        (markDone)="markSessionDone($event)"
+        [selected]="sessionStore.selectedSessionId() === session.id"
+        (select)="sessionStore.selectSession($event)"
+        (markDone)="sessionStore.markSessionDone($event)"
       ></app-session-card>
     </li>
   } @empty {
@@ -37,7 +37,7 @@
   }
 </ul>
 
-@if (selectedSession(); as session) {
+@if (sessionStore.selectedSession(); as session) {
   <section class="detail-panel" aria-label="Selected session details">
     <p class="detail-kicker">Selected session</p>
     <h3>{{ session.clientName }}</h3>
