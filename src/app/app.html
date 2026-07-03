@@ -18,8 +18,10 @@
   </div>
 </section>
 
+<app-search-box [(value)]="query"></app-search-box>
+
 <ul class="session-list">
-  @for (session of sessions(); track session.id) {
+  @for (session of filteredSessions(); track session.id) {
     <li class="session-list-item">
       <app-session-card
         [session]="session"
@@ -29,7 +31,7 @@
       ></app-session-card>
     </li>
   } @empty {
-    <li>No sessions scheduled yet.</li>
+    <li>No sessions match your search.</li>
   }
 </ul>
 

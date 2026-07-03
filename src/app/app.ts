@@ -2,10 +2,11 @@ import { Component, PLATFORM_ID, computed, effect, inject, signal } from '@angul
 import { CurrencyPipe, DatePipe, isPlatformBrowser } from '@angular/common';
 import { SessionCard } from './domains/sessions/components/session-card/session-card';
 import { Session } from './session.model';
+import { SearchBox } from './shared/ui/search-box/search-box';
 
 @Component({
   selector: 'app-root',
-  imports: [CurrencyPipe, DatePipe, SessionCard],
+  imports: [CurrencyPipe, DatePipe, SearchBox, SessionCard],
   templateUrl: './app.html',
   styleUrl: './app.scss',
 })
@@ -14,6 +15,7 @@ export class App {
 
   protected readonly title = signal('Shotplan');
   protected readonly selectedSessionId = signal<string | null>(null);
+  protected readonly query = signal('');
   protected readonly sessions = signal<Session[]>([
     {
       id: 's-101',
@@ -75,6 +77,18 @@ export class App {
       .filter((session) => session.status === 'booked')
       .reduce((total, session) => total + session.price, 0),
   );
+
+  protected readonly filteredSessions = computed(() => {
+    const query = this.query().trim().toLowerCase();
+
+    if (!query) {
+      return this.sessions();
+    }
+
+    return this.sessions().filter((session) =>
+      session.clientName.toLowerCase().includes(query),
+    );
+  });
 
   private readonly titleEffect = effect(() => {
     if (!isPlatformBrowser(this.platformId)) {
