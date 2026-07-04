@@ -1,4 +1,4 @@
-import { Controller, Get } from '@nestjs/common';
+import { Controller, Get, Param } from '@nestjs/common';
 
 import { Session, SessionsService } from './sessions.service';
 
@@ -9,5 +9,10 @@ export class SessionsController {
   @Get()
   findAll(): Session[] {
     return this.sessionsService.findAll();
+  }
+
+  @Get(':id')
+  findOne(@Param('id') id: string): Session | undefined {
+    return this.sessionsService.findOne(id);
   }
 }

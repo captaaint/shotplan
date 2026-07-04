@@ -30,4 +30,8 @@ export class SessionsService {
   findAll(): Session[] {
     return this.sessions;
   }
+
+  findOne(id: string): Session | undefined {
+    return this.sessions.find((session) => session.id === id);
+  }
 }
