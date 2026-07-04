@@ -6,9 +6,11 @@ async function bootstrap(): Promise<void> {
   const app = await NestFactory.create(AppModule);
   const port = Number(process.env['PORT'] ?? 3000);
 
+  app.setGlobalPrefix('api');
+
   await app.listen(port);
 
-  console.log(`ShotPlan API is running on http://localhost:${port}`);
+  console.log(`ShotPlan API is running on http://localhost:${port}/api`);
 }
 
 void bootstrap();
