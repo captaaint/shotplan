@@ -10,7 +10,8 @@ type Database = Record<CollectionName, Entity[]> & { $schema?: string };
 
 const collectionNames: CollectionName[] = ['sessions', 'clients', 'leads', 'locations', 'packages'];
 const dbPath = join(process.cwd(), 'db.json');
-const isNetlifyRuntime = process.env['NETLIFY'] === 'true';
+const isNetlifyRuntime =
+  process.env['NETLIFY'] === 'true' || Boolean(process.env['AWS_LAMBDA_FUNCTION_NAME']);
 let netlifyDatabase: Database | undefined;
 
 export const apiApp = express();
@@ -169,7 +170,17 @@ async function readDatabase(): Promise<Database> {
     return netlifyDatabase;
   }
 
-  const rawDatabase = await readFile(dbPath, 'utf-8');
+  let rawDatabase: string;
+
+  try {
+    rawDatabase = await readFile(dbPath, 'utf-8');
+  } catch (error) {
+    if (isFileNotFound(error)) {
+      return cloneDatabase(databaseSeed as Database);
+    }
+
+    throw error;
+  }
 
   return JSON.parse(rawDatabase) as Database;
 }
@@ -190,6 +201,15 @@ function parseCollectionName(value: string | undefined): CollectionName | null {
 
 function cloneDatabase(database: Database): Database {
   return JSON.parse(JSON.stringify(database)) as Database;
+}
+
+function isFileNotFound(error: unknown): boolean {
+  return (
+    typeof error === 'object' &&
+    error !== null &&
+    'code' in error &&
+    (error as { code?: string }).code === 'ENOENT'
+  );
 }
 
 function createId(): string {

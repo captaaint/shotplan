@@ -5,10 +5,14 @@ import {
   getTrustProxyHeaders,
 } from '@netlify/angular-runtime/app-engine.js';
 
-const isNetlifyRuntime = process.env['NETLIFY'] === 'true';
+const isNetlifyRuntime =
+  process.env['NETLIFY'] === 'true' || Boolean(process.env['AWS_LAMBDA_FUNCTION_NAME']);
+const fallbackAllowedHosts = ['localhost', '127.0.0.1', 'shotplan-1.netlify.app'];
 
 const angularAppEngine = new AngularAppEngine({
-  allowedHosts: isNetlifyRuntime ? getAllowedHosts() : ['localhost', '127.0.0.1'],
+  allowedHosts: isNetlifyRuntime
+    ? [...new Set([...getAllowedHosts(), ...fallbackAllowedHosts])]
+    : fallbackAllowedHosts,
   trustProxyHeaders: isNetlifyRuntime ? getTrustProxyHeaders() : [],
 });
 
