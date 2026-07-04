@@ -1,16 +1,10 @@
 import { Injectable, NotFoundException } from '@nestjs/common';
 
-export type Session = {
-  id: string;
-  clientName: string;
-  type: string;
-  date: string;
-  status: 'inquiry' | 'booked' | 'done';
-};
+import { SessionEntity } from './session.entity';
 
 @Injectable()
 export class SessionsService {
-  private readonly sessions: Session[] = [
+  private readonly sessions: SessionEntity[] = [
     {
       id: 's-101',
       clientName: 'Anna Kovacs',
@@ -27,11 +21,11 @@ export class SessionsService {
     },
   ];
 
-  findAll(): Session[] {
+  findAll(): SessionEntity[] {
     return this.sessions;
   }
 
-  findOne(id: string): Session {
+  findOne(id: string): SessionEntity {
     const session = this.sessions.find((currentSession) => currentSession.id === id);
 
     if (!session) {
