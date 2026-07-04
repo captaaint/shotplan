@@ -2,7 +2,7 @@
 
 ShotPlan is an Angular learning project for building a small photography planning app. It is split into modules and phases in [LEARNING-PLAN.md](./LEARNING-PLAN.md), with each phase adding a real piece of application architecture.
 
-The app currently includes dashboards and CRUD-style domain screens for sessions, clients, leads, locations, and packages. Data is served through Angular SSR API routes backed by `db.json`.
+The app currently includes dashboards and CRUD-style domain screens for sessions, clients, leads, locations, and packages. Data is served by an Express API backed by `db.json`; locally it runs as a Node server, and on Netlify it runs as a Netlify Function.
 
 ## Tech Stack
 
@@ -12,7 +12,9 @@ The app currently includes dashboards and CRUD-style domain screens for sessions
 - Angular Router with lazy domain routes
 - Reactive forms
 - Angular SSR
+- Express
 - Netlify Angular Runtime
+- Netlify Functions
 - Vitest
 - Prettier
 
@@ -23,6 +25,8 @@ src/app/
   core/        app-wide config, layout, guards, services, HTTP interceptors
   domains/    feature domains such as sessions, clients, leads, locations, packages
   shared/     reusable UI and form components
+src/backend/   shared Express API used locally and by the Netlify Function
+netlify/       Netlify Function entry points
 ```
 
 Each domain keeps its own routes, data-access services/stores, feature pages, and local components.
@@ -46,6 +50,8 @@ Then open:
 ```text
 http://localhost:4200
 ```
+
+`npm start` runs both the Express API and the Angular dev server. Angular proxies `/api` to the local API server through [proxy.conf.json](./proxy.conf.json).
 
 Build the app:
 
@@ -73,7 +79,19 @@ The Angular app uses `src/app/core/config/api.config.ts` to point relative API r
 npm start
 ```
 
-Runs the Angular development server.
+Runs the local Express API and Angular development server together.
+
+```bash
+npm run api
+```
+
+Runs only the local Express API on `http://localhost:4000/api`.
+
+```bash
+npm run start:web
+```
+
+Runs only the Angular development server with the API proxy enabled.
 
 ```bash
 npm run build
@@ -95,7 +113,9 @@ Builds continuously in development mode.
 
 ## Local Data
 
-The backend handler reads and writes [db.json](./db.json). The API routes expose these collections:
+The Express backend reads and writes [db.json](./db.json) locally. On Netlify, the same Express app is wrapped by [netlify/functions/api.ts](./netlify/functions/api.ts) and uses bundled seed data from `db.json`.
+
+The API routes expose these collections:
 
 - `/api/sessions`
 - `/api/clients`
@@ -104,6 +124,8 @@ The backend handler reads and writes [db.json](./db.json). The API routes expose
 - `/api/packages`
 
 Supported methods are `GET`, `POST`, `PATCH`, and `DELETE`.
+
+Netlify Function writes are temporary because serverless functions do not provide a durable writable filesystem. Use a hosted database when deployed data should persist.
 
 ## Learning Plan
 
