@@ -1,4 +1,4 @@
-import { Injectable } from '@nestjs/common';
+import { Injectable, NotFoundException } from '@nestjs/common';
 
 export type Session = {
   id: string;
@@ -31,7 +31,13 @@ export class SessionsService {
     return this.sessions;
   }
 
-  findOne(id: string): Session | undefined {
-    return this.sessions.find((session) => session.id === id);
+  findOne(id: string): Session {
+    const session = this.sessions.find((currentSession) => currentSession.id === id);
+
+    if (!session) {
+      throw new NotFoundException(`Session ${id} was not found.`);
+    }
+
+    return session;
   }
 }

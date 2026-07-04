@@ -12,7 +12,7 @@ export class SessionsController {
   }
 
   @Get(':id')
-  findOne(@Param('id') id: string): Session | undefined {
+  findOne(@Param('id') id: string): Session {
     return this.sessionsService.findOne(id);
   }
 }
