@@ -3,6 +3,7 @@ import { DevtoolsModule } from '@nestjs/devtools-integration';
 
 import { AppController } from './app.controller';
 import { SessionsController } from './sessions.controller';
+import { SessionsService } from './sessions.service';
 
 @Module({
   imports: [
@@ -11,5 +12,6 @@ import { SessionsController } from './sessions.controller';
     }),
   ],
   controllers: [AppController, SessionsController],
+  providers: [SessionsService],
 })
 export class AppModule {}

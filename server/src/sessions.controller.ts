@@ -1,32 +1,13 @@
 import { Controller, Get } from '@nestjs/common';
 
-type Session = {
-  id: string;
-  clientName: string;
-  type: string;
-  date: string;
-  status: 'inquiry' | 'booked' | 'done';
-};
+import { Session, SessionsService } from './sessions.service';
 
 @Controller('sessions')
 export class SessionsController {
+  constructor(private readonly sessionsService: SessionsService) {}
+
   @Get()
   findAll(): Session[] {
-    return [
-      {
-        id: 's-101',
-        clientName: 'Anna Kovacs',
-        type: 'Portrait',
-        date: '2026-07-15',
-        status: 'booked',
-      },
-      {
-        id: 's-102',
-        clientName: 'Mark Turner',
-        type: 'Engagement',
-        date: '2026-07-18',
-        status: 'inquiry',
-      },
-    ];
+    return this.sessionsService.findAll();
   }
 }
